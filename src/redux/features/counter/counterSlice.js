@@ -1,8 +1,20 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   value: 0,
+  getData:[],
+  loading:true
+
 }
+
+export const fetchData = createAsyncThunk(
+    'getData',
+    async () => {
+      const response = await fetch(`https://pleasant-gloves-deer.cyclic.cloud/menu/getAllMenu`)
+
+      return (await response.json())
+    }
+  )
 
 export const counterSlice = createSlice({
   name: 'counter',
@@ -19,6 +31,12 @@ export const counterSlice = createSlice({
       state.value += action.payload
     },
   },
+  extraReducers:(builder)=>{
+    builder.addCase(fetchData.fulfilled,(state, action)=>{
+        state.getData=action.payload
+        state.loading=false
+    })
+ },
 })
 
 
