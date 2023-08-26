@@ -3,31 +3,31 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { decrement, fetchData, increment,incrementByAmount } from './redux/features/counter/counterSlice'
+import { decrement, increment,incrementByAmount } from './redux/features/counter/counterSlice'
+import { fetchMenu } from './redux/features/menuSlice'
+import Menu from './components/Menu'
 
 
 function App() {
 
 const counter=useSelector(state=>state.counter.value)
-const getData=useSelector(state=>state.counter.getData)
-const loading=useSelector(state=>state.counter.loading)
+const menu=useSelector(state=>state.menu.menu)
+
 
 const dispatch=useDispatch()
-console.log(loading)
 
 useEffect(()=>{
-  dispatch(fetchData())
+  dispatch(fetchMenu())
 },[])
 
-console.log(loading)
-console.log(getData)
 
   return (
-    <div>
-      <button onClick={() => dispatch(increment())}>+</button>
-      <div>{counter}</div>
-      <button onClick={() => dispatch(decrement())}>-</button>
-    </div>
+    <>
+      {menu.map((m)=>{
+        return <Menu key={m._id} id={m._id}/>
+   
+      })}
+    </>
   )
 }
 

@@ -6,11 +6,11 @@ const initialState={
 }
 
 export const fetchMenu = createAsyncThunk(
-    'getMenuData',
+    '',
     async () => {
-      const response = await fetch(`https://pleasant-gloves-deer.cyclic.cloud/menu/getAllMenu`)
+      const response = await axios(`https://pleasant-gloves-deer.cyclic.cloud/menu/getAllMenu`)
 
-      return (await response)
+      return (await response.data)
     }
   )
 
@@ -24,10 +24,9 @@ export const menuSlice=createSlice({
     },
      extraReducers:(builder)=>{
         builder.addCase(fetchMenu.fulfilled,(state, action)=>{
-            state.getMenuData=action.payload
+            state.menu=action.payload
         })
      },
 })
-export const { decrement} = menuSlice.actions
 
 export default menuSlice.reducer
