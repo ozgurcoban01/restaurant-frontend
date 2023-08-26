@@ -7,6 +7,8 @@ import { decrement, increment,incrementByAmount } from './redux/features/counter
 import { fetchMenu } from './redux/features/menuSlice'
 import Menu from './components/Menu'
 
+import {Box} from '@mui/material'
+import EnterName from './components/consumerComponents/EnterName'
 
 function App() {
 
@@ -23,10 +25,7 @@ useEffect(()=>{
 
   return (
     <>
-      {menu.map((m)=>{
-        return <Menu key={m._id} id={m._id}/>
-   
-      })}
+      <EnterName/>
     </>
   )
 }
