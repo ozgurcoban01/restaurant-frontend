@@ -9,11 +9,7 @@ import EnterName from './consumerComponents/EnterName'
 
 const Consumer = () => {
   return (
-    <><Routes>
-         <Route path="ScanQR" element={<ScanQR/>} />
-         <Route path="enterName" element={<EnterName/>} />
-         <Route path="Order" element={<Order/>} />
-    </Routes>
+    <>
     </> 
   )
 }
