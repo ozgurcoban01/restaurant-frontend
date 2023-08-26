@@ -1,13 +1,14 @@
 
 import React, { useRef ,useState} from 'react'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { lime, purple,red,green,orange,deepOrange,deepPurple } from '@mui/material/colors';
 import Button from '@mui/material/Button';
 import { TextField } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import LoadingButton from '@mui/lab/LoadingButton';
+import { useNavigate } from 'react-router-dom';
 
 const EnterName = () => {
+  const navigate=useNavigate()
     const [loading, setLoading] = useState(false);
     function handleClick() {
       setLoading(true);
@@ -16,13 +17,7 @@ const EnterName = () => {
 
     const [textError,setTextError]=useState(false)
 
-    const theme = createTheme({
-        palette: {
-          primary: deepPurple,
-          secondary: orange,
-        },
-      });
-    
+
     const checkText=()=>{
         const div=textRef.current
         const innerText=div.children[1].children[0].value
@@ -34,7 +29,7 @@ const EnterName = () => {
          
                 setTextError(true)
             }
-     
+   
 
     }
     const setTextCheck=()=>{
@@ -44,7 +39,7 @@ const EnterName = () => {
     
       
   return (
-    <ThemeProvider  theme={theme}>
+    
       <form>
       <TextField required ref={textRef} onBlur={checkText} onFocus={setTextCheck} id="outlined-basic" label="Enter Name" variant="outlined" error={textError}/>
       <Button type="submit" variant="contained"  >
@@ -62,7 +57,7 @@ const EnterName = () => {
           <span>Save</span>
         </LoadingButton>
       </form>
-    </ThemeProvider>
+   
   )
 }
 

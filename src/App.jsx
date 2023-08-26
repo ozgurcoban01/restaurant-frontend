@@ -1,33 +1,36 @@
-import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import { useDispatch, useSelector } from 'react-redux'
-import { decrement, increment,incrementByAmount } from './redux/features/counter/counterSlice'
-import { fetchMenu } from './redux/features/menuSlice'
-import Menu from './components/Menu'
+import { useEffect, useState } from "react";
 
-import {Box} from '@mui/material'
-import EnterName from './components/consumerComponents/EnterName'
+import "./App.css";
+import { useDispatch, useSelector } from "react-redux";
+
+import { fetchMenu } from "./redux/features/menuSlice";
+
+import { Route, Routes } from "react-router-dom";
+import { ThemeProvider } from "@emotion/react";
+import { consumerTheme } from "./consumerTheme";
+import Consumer from "./components/Consumer";
 
 function App() {
+  const counter = useSelector((state) => state.counter.value);
+  const menu = useSelector((state) => state.menu.menu);
 
-const counter=useSelector(state=>state.counter.value)
-const menu=useSelector(state=>state.menu.menu)
+  const dispatch = useDispatch();
 
-
-const dispatch=useDispatch()
-
-useEffect(()=>{
-  dispatch(fetchMenu())
-},[])
-
+  useEffect(() => {
+    dispatch(fetchMenu());
+  }, []);
 
   return (
     <>
-      <EnterName/>
+     <ThemeProvider theme={consumerTheme}>
+      <Routes>
+       
+          <Route path="consumer" element={<Consumer/>} />
+      
+      </Routes>
+      </ThemeProvider>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
