@@ -1,18 +1,42 @@
 
-import React, { useRef ,useState} from 'react'
+import React, { useEffect, useRef ,useState} from 'react'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Button from '@mui/material/Button';
-import { TextField } from '@mui/material';
+import { Box, Container, Divider, Stack, TextField } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useNavigate } from 'react-router-dom';
+import SendRoundedIcon from '@mui/icons-material/SendRounded';
+import axios from 'axios'
 
 const EnterName = () => {
   const navigate=useNavigate()
+
     const [loading, setLoading] = useState(false);
+    const [consumerName, setConsumerName] = useState("");
+
     function handleClick() {
       setLoading(true);
     }
+
+    useEffect(()=>{
+      if(loading){
+        console.log("JKASLFAKSJD")
+      const consumer={
+        name:consumerName
+      }
+      const fetchData=async ()=>{
+        const consumerId=await axios.post('https://pleasant-gloves-deer.cyclic.cloud/consumer/createNewConsumer',consumer).then(res=>res.data._id)
+       
+        const goToMenu=(id)=>{
+          navigate(`/consumer/consumerSelect/${id}`)
+        }
+        setTimeout(goToMenu(consumerId),2000)
+      }
+      fetchData()
+      }
+    },[loading])
+
     const textRef=useRef()
 
     const [textError,setTextError]=useState(false)
@@ -36,27 +60,36 @@ const EnterName = () => {
         setTextError(0)
 
     }
-    
+    const setConsumerText=()=>{
+      const div=textRef.current
+        const innerText=div.children[1].children[0].value
+      setConsumerName(innerText)
+
+  }
       
   return (
     
-      <form>
-      <TextField required ref={textRef} onBlur={checkText} onFocus={setTextCheck} id="outlined-basic" label="Enter Name" variant="outlined" error={textError}/>
-      <Button type="submit" variant="contained"  >
-        Secondary
-      </Button>
-      <LoadingButton
-          size="small"
+      <Container disableGutters  fixed sx={{marignTop:0,marginBottom:0,height:"100vh",display:"flex",alignItems:"center",justifyContent:"center"}} >
+        <Box >
+        <form>
+<Stack direction="column" spacing={2} divider={<Divider orientation="horizontal" flexItem />} >
+<TextField onChange={setConsumerText} required ref={textRef} onBlur={checkText} onFocus={setTextCheck} id="outlined-basic" label="Enter Name" variant="outlined" error={textError}/>
 
+      <LoadingButton
+      type="submit"
+          size="small"
           onClick={handleClick}
           loading={loading}
           loadingPosition="start"
-          startIcon={<SaveIcon />}
+          startIcon={<SendRoundedIcon />}
           variant="contained"
         >
-          <span>Save</span>
-        </LoadingButton>
+          <span>Giriş Yap</span>
+      </LoadingButton>
+</Stack>
       </form>
+        </Box>
+      </Container>
    
   )
 }

@@ -1,8 +1,11 @@
 import React from 'react'
+import { useParams } from 'react-router'
 
 const ConsumerSelect = () => {
+  const consumerId=useParams()
+
   return (
-    <div>ConsumerSelect</div>
+    <div>ConsumerSelected: {consumerId.consumerId}</div>
   )
 }
 

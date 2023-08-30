@@ -10,6 +10,7 @@ import { ThemeProvider } from "@emotion/react";
 import { consumerTheme } from "./consumerTheme";
 import Consumer from "./components/Consumer";
 import EnterName from "./components/consumerComponents/EnterName";
+import ConsumerSelect from "./components/consumerComponents/ConsumerSelect";
 
 function App() {
   const counter = useSelector((state) => state.counter.value);
@@ -26,9 +27,8 @@ function App() {
       <ThemeProvider theme={consumerTheme}>
         <Routes>
           <Route path="consumer" >
-
             <Route path="enterName" element={<EnterName />} />
-
+            <Route path="consumerSelect/:consumerId" element={<ConsumerSelect />} />
           </Route>
         </Routes>
       </ThemeProvider>
