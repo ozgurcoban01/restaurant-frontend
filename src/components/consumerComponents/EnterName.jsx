@@ -8,6 +8,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { useNavigate } from 'react-router-dom';
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
 import axios from 'axios'
+import { lime, purple,red,green,orange,deepOrange,deepPurple } from '@mui/material/colors';
 
 const EnterName = () => {
   const navigate=useNavigate()
@@ -68,9 +69,9 @@ const EnterName = () => {
   }
       
   return (
-    
-      <Container disableGutters  fixed sx={{marignTop:0,marginBottom:0,height:"100vh",display:"flex",alignItems:"center",justifyContent:"center"}} >
-        <Box >
+    <Box sx={{backgroundColor:deepPurple[100],marignTop:0,marginBottom:0,width:"100vw",height:"100vh",display:"flex",alignItems:"center",justifyContent:"center"}}>
+        <Container disableGutters  fixed sx={{marignTop:0,marginBottom:0,height:"100vh",display:"flex",alignItems:"center",justifyContent:"center"}} >
+        <Box sx={{p:3}}>
         <form>
 <Stack direction="column" spacing={2} divider={<Divider orientation="horizontal" flexItem />} >
 <TextField onChange={setConsumerText} required ref={textRef} onBlur={checkText} onFocus={setTextCheck} id="outlined-basic" label="Enter Name" variant="outlined" error={textError}/>
@@ -90,6 +91,8 @@ const EnterName = () => {
       </form>
         </Box>
       </Container>
+    </Box>
+    
    
   )
 }

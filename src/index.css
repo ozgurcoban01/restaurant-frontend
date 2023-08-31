@@ -3,3 +3,15 @@
     margin: 0;
     box-sizing: border-box;
 }
+#reader > div:nth-child(1) > img{
+display: none;
+}
+
+#html5-qrcode-anchor-scan-type-change{
+    display: none;
+}
+
+#html5-qrcode-button-camera-permission{
+    font-weight: 600;
+    color: white;
+}
