@@ -29,7 +29,7 @@ function App() {
         <Routes>
           <Route path="consumer" >
             <Route path="scanQR" element={<ScanQR />} />
-            <Route path="enterName" element={<EnterName />} />
+            <Route path="enterName/:tableId" element={<EnterName />} />
             <Route path="consumerSelect/:consumerId" element={<ConsumerSelect />} />
           </Route>
         </Routes>

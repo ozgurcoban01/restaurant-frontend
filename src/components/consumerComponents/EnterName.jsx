@@ -5,14 +5,14 @@ import Button from '@mui/material/Button';
 import { Box, Container, Divider, Stack, TextField } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
 import axios from 'axios'
 import { lime, purple,red,green,orange,deepOrange,deepPurple } from '@mui/material/colors';
 
 const EnterName = () => {
   const navigate=useNavigate()
-
+  const tableId=useParams()
     const [loading, setLoading] = useState(false);
     const [consumerName, setConsumerName] = useState("");
 
@@ -27,11 +27,13 @@ const EnterName = () => {
         name:consumerName
       }
       const fetchData=async ()=>{
+        
         const consumerId=await axios.post('https://pleasant-gloves-deer.cyclic.cloud/consumer/createNewConsumer',consumer).then(res=>res.data._id)
        
         const goToMenu=(id)=>{
           navigate(`/consumer/consumerSelect/${id}`)
         }
+
         setTimeout(goToMenu(consumerId),2000)
       }
       fetchData()
@@ -67,7 +69,7 @@ const EnterName = () => {
       setConsumerName(innerText)
 
   }
-      
+      console.log(tableId.tableId)
   return (
     <Box sx={{backgroundColor:deepPurple[100],marignTop:0,marginBottom:0,width:"100vw",height:"100vh",display:"flex",alignItems:"center",justifyContent:"center"}}>
         <Container disableGutters  fixed sx={{marignTop:0,marginBottom:0,height:"100vh",display:"flex",alignItems:"center",justifyContent:"center"}} >
