@@ -5,7 +5,10 @@ import { lime, purple,red,green,orange,deepOrange,deepPurple } from '@mui/materi
 import "../../index.css";
 import CircularProgress from '@mui/material/CircularProgress';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setTableId } from '../../redux/features/tableSlice';
 const ScanQR = () => {
+    const dispatch=useDispatch()
     const navigate=useNavigate()
     const [scanResult,setScanResult]=useState(null)
     const [loading,setLoading]=useState(false)
@@ -20,10 +23,11 @@ const ScanQR = () => {
       
         const success=(result)=>{
             setLoading(true)
+            
             setTimeout(()=>{
                 setLoading(false)
-                scanner.clear()
                 setScanResult(result)
+                scanner.clear()
             },2000)
 
        
@@ -69,7 +73,9 @@ const ScanQR = () => {
     let scanResultDiv;
    
     if (scanResult) {
-        navigate(`/consumer/enterName/${scanResult}`)
+        dispatch(setTableId(scanResult))
+
+        navigate(`/consumer/enterName`)
       } else {
         scanResultDiv = <div id="reader" ></div> ;
       }
