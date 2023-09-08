@@ -28,7 +28,7 @@ const Test = () => {
 
   useEffect( ()=>{
     const getImages =async ()=>{
-      const allImages=await (await axios.get("http://localhost:5001/image/getAll").then(res => res.data))
+      const allImages=await (await axios.get("https://pleasant-gloves-deer.cyclic.cloud/image/getAll").then(res => res.data))
       
       setImages(allImages)
     }
