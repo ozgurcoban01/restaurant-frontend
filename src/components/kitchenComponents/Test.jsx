@@ -22,40 +22,49 @@ const Test = () => {
   };
 
   const onInputChange = (e) => {
-    console.log(e.target.files[0]);
+
     setImage(e.target.files[0]);
   };
 
   useEffect( ()=>{
     const getImages =async ()=>{
       const allImages=await (await axios.get("http://localhost:5001/image/getAll").then(res => res.data))
-    
-    setImages(allImages)
-    
+      
+      setImages(allImages)
     }
+
     getImages()
   },[])
   
  useEffect( ()=>{
-   
    if(images.length>0){
-   setSrc(images[0].buffer.data)
-
-   console.log(images[0])
+     setSrc(images[0].buffer.data)
    }
+
   },[images])
+
   useEffect( ()=>{
-   
-    console.log(src.toString('base64'))
-    setSrcImage('data:image/jpeg;base64,' + src.toString('base64'))
+
+
+ 
+      var binary = '';
+      var bytes = new Uint8Array( src );
+      var len = bytes.byteLength;
+      for (var i = 0; i < len; i++) {
+        binary += String.fromCharCode( bytes[ i ] );
+      }
+      const r= window.btoa( binary );
+      setSrcImage(r)
+      
    },[src])
+
   return (
     <div>
       <form onSubmit={submitImage}>
         <input type="file" onChange={onInputChange}></input>
         <button type="submit">gönder</button>
       </form>
-      
+      <img style={{width:"1000px"}} src={`data:image/png;base64,${srcImage}`} />
     </div>
   );
 };
