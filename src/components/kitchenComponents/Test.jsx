@@ -5,7 +5,14 @@ const Test = () => {
   const [images, setImages] = useState([]);
   const [image, setImage] = useState();
   const [src, setSrc] = useState([]);
-  const [srcImage, setSrcImage] = useState();
+  const [srcImage, setSrcImage] = useState([]);
+  const [imageSrc, setimageSrc] = useState();
+
+  const getImages =async ()=>{
+    const allImages=await (await axios.get("https://pleasant-gloves-deer.cyclic.cloud/image/getAll").then(res => res.data))
+    
+    setImages(allImages)
+  }
 
   const submitImage = async (e) => {
     e.preventDefault();
@@ -13,12 +20,14 @@ const Test = () => {
     formData.append("image", image);
 
     const result = await axios.post(
-      "http://localhost:5001/image/post",
+      "https://pleasant-gloves-deer.cyclic.cloud/image/post",
       formData,
       {
         headers:{"Content-Type":"multipart/form-data"},
       }
     )
+
+    getImages()
   };
 
   const onInputChange = (e) => {
@@ -27,12 +36,6 @@ const Test = () => {
   };
 
   useEffect( ()=>{
-    const getImages =async ()=>{
-      const allImages=await (await axios.get("https://pleasant-gloves-deer.cyclic.cloud/image/getAll").then(res => res.data))
-      
-      setImages(allImages)
-    }
-
     getImages()
   },[])
   
@@ -44,18 +47,29 @@ const Test = () => {
   },[images])
 
   useEffect( ()=>{
+    console.log()
+    
+    var imagesSrcList=[];
 
+    images.forEach(image => {
 
- 
+      const imgData=image.buffer.data
+
       var binary = '';
-      var bytes = new Uint8Array( src );
+      var bytes = new Uint8Array( imgData );
       var len = bytes.byteLength;
       for (var i = 0; i < len; i++) {
         binary += String.fromCharCode( bytes[ i ] );
       }
-      const r= window.btoa( binary );
-      setSrcImage(r)
-      
+      const imgSrc= window.btoa( binary );
+      imagesSrcList.push(imgSrc)
+
+      //setSrcImage(images)
+
+    });
+    setSrcImage(imagesSrcList)
+    setimageSrc(srcImage[0])
+    
    },[src])
 
   return (
@@ -64,8 +78,11 @@ const Test = () => {
         <input type="file" onChange={onInputChange}></input>
         <button type="submit">gönder</button>
       </form>
-      <img style={{width:"1000px"}} src={`data:image/png;base64,${srcImage}`} />
-    </div>
+      
+      {srcImage.map(e=>   <img style={{width:"800px"}} src={`data:image/png;base64,${e}`} />
+         )}
+      
+   </div>
   );
 };
 
