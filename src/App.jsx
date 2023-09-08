@@ -12,6 +12,7 @@ import Consumer from "./components/Consumer";
 import EnterName from "./components/consumerComponents/EnterName";
 import ConsumerSelect from "./components/consumerComponents/ConsumerSelect";
 import ScanQR from "./components/consumerComponents/ScanQR";
+import Test from "./components/kitchenComponents/Test";
 
 function App() {
   const counter = useSelector((state) => state.counter.value);
@@ -32,6 +33,9 @@ function App() {
             <Route path="enterName" element={<EnterName />} />
             <Route path="consumerSelect/:consumerId" element={<ConsumerSelect />} />
           </Route>
+          <Route path="kitchen" >
+            <Route path="test" element={<Test />} />
+         </Route>
         </Routes>
       </ThemeProvider>
     </>

@@ -91,5 +91,5 @@ const ScanQR = () => {
     </div>
   )
 }
-
+2
 export default ScanQR
