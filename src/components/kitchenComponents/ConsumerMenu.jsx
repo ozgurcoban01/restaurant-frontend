@@ -19,7 +19,7 @@ import {
     deepOrange,
     deepPurple,
   } from "@mui/material/colors";
-const ConsumerMenu = () => {
+const ConsumerMenuK = () => {
     const [state, setState] = React.useState({
         top: false,
         left: false,
@@ -83,4 +83,4 @@ const ConsumerMenu = () => {
   );
 }
 
-export default ConsumerMenu
+export default ConsumerMenuK

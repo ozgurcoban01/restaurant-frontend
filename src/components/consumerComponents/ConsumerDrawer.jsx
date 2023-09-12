@@ -30,7 +30,7 @@ const ConsumerDrawer = () => {
 
       }}
     >
-      <Box sx={{ width: "100%",height:"100%", backgroundColor: deepPurple[900],color:"white" }}>
+      <Box sx={{ width: "100%",height:"100%", backgroundColor: purple[900],color:"white" }}>
         <List component="nav" aria-label="secondary mailbox folder">
           <ListItemButton
             selected={selectedIndex === 2}

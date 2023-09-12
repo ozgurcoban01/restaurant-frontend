@@ -13,8 +13,9 @@ import EnterName from "./components/consumerComponents/EnterName";
 import ConsumerSelect from "./components/consumerComponents/ConsumerSelect";
 import ScanQR from "./components/consumerComponents/ScanQR";
 import Test from "./components/kitchenComponents/Test";
-import ConsumerMenu from "./components/kitchenComponents/ConsumerMenu";
+import ConsumerMenuK from "./components/kitchenComponents/ConsumerMenu";
 import ConsumerDrawer from "./components/consumerComponents/ConsumerDrawer";
+import ConsumerMenu from "./components/consumerComponents/ConsumerMenu";
 
 function App() {
   const counter = useSelector((state) => state.counter.value);
@@ -32,6 +33,7 @@ function App() {
         <Routes>
           <Route path="consumer" >
             <Route path="scanQR" element={<ScanQR />} />
+            <Route path="menu" element={<ConsumerMenu />} />
             <Route path="enterName" element={<EnterName />} />
             <Route path="consumerSelect/:consumerId" element={<ConsumerSelect />} />
           </Route>

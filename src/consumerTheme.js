@@ -6,4 +6,14 @@ export const consumerTheme = createTheme({
       primary: deepPurple,
       secondary: orange,
     },
+    components: {
+      MuiList: {
+        styleOverrides: {
+          root: {
+            backgroundColor: purple[900],
+     
+          },
+        },
+      },
+    },
   });
