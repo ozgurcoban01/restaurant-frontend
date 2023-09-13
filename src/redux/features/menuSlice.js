@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from 'axios'
+
 const initialState={
    
-    menu:[]
+    menu:[],
 }
 
 export const fetchMenu = createAsyncThunk(
