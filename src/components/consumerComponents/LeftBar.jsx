@@ -17,16 +17,17 @@ import {
   deepOrange,
   deepPurple,
 } from "@mui/material/colors";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const LeftBar = () => {
-
+  const dispatch=useDispatch()
   const cat = useSelector((state) => state.categories);
   const categories = cat.categories;
   const [selectedIndex, setSelectedIndex] = React.useState("all");
   const [selCategory, setSelCategory] = useState("all");
   console.log(categories);
-  const handleListItemClick = (event, index) => {
+  const handleListItemClick = (event, index,category) => {
+    dispatch(setSelCategory(category))
     setSelectedIndex(index);
   };
 
@@ -57,7 +58,7 @@ const LeftBar = () => {
             <ListItem disablePadding>
             <ListItemButton
               selected={selectedIndex === key}
-              onClick={(event) => handleListItemClick(event, key)}
+              onClick={(event) => handleListItemClick(event, key,category)}
             >
               <ListItemIcon>
                 <InboxIcon />
