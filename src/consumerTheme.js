@@ -6,6 +6,7 @@ export const consumerTheme = createTheme({
       primary: deepPurple,
       secondary: orange,
     },
+    
     components: {
       MuiList: {
         styleOverrides: {
@@ -16,4 +17,5 @@ export const consumerTheme = createTheme({
         },
       },
     },
+    
   });

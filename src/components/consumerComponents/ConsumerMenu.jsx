@@ -102,7 +102,7 @@ const ConsumerMenu = () => {
           }}
         >
           {!isSmall ? <LeftBar /> : null}
-          <MainMenus  />
+          <MainMenus/>
           {!isSmall ? <RightBar  /> : null}
         </Box>
 
@@ -111,7 +111,8 @@ const ConsumerMenu = () => {
           <CardMenu />
           <Divider />
           <CardMenu />
-          <Divider /> <CardMenu />
+          <Divider />
+          <CardMenu />
           <Divider />
         </Menu>
       </Box>

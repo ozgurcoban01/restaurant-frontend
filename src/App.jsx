@@ -33,7 +33,7 @@ function App() {
         <Routes>
           <Route path="consumer" >
             <Route path="scanQR" element={<ScanQR />} />
-            <Route path="menu" element={<ConsumerMenu />} />
+            <Route path="menu/:consumerId" element={<ConsumerMenu />} />
             <Route path="enterName" element={<EnterName />} />
             <Route path="consumerSelect/:consumerId" element={<ConsumerSelect />} />
           </Route>

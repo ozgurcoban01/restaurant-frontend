@@ -50,7 +50,7 @@ const EnterName = () => {
         const goToMenu = (id) => {
           dispatch(setConsumerNameRedux(consumerName))
           
-          navigate(`/consumer/consumerSelect/${id}`);
+          navigate(`/consumer/menu/${id}`);
         };
 
         setTimeout(goToMenu(consumerId), 2000);

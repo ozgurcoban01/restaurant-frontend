@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -9,48 +9,65 @@ import Divider from "@mui/material/Divider";
 import InboxIcon from "@mui/icons-material/Inbox";
 import DraftsIcon from "@mui/icons-material/Drafts";
 import {
-    lime,
-    purple,
-    red,
-    green,
-    orange,
-    deepOrange,
-    deepPurple,
-  } from "@mui/material/colors";
+  lime,
+  purple,
+  red,
+  green,
+  orange,
+  deepOrange,
+  deepPurple,
+} from "@mui/material/colors";
+import { useSelector } from "react-redux";
+
 const LeftBar = () => {
+
+  const cat = useSelector((state) => state.categories);
+  const categories = cat.categories;
+  const [selectedIndex, setSelectedIndex] = React.useState("all");
+  const [selCategory, setSelCategory] = useState("all");
+  console.log(categories);
+  const handleListItemClick = (event, index) => {
+    setSelectedIndex(index);
+  };
+
   return (
     <Box
       sx={{
         overflowY: "scroll",
         height: "80vh",
-        width: "25vw",
-        scrollbarWidth:"0px" 
+        width: "20vw",
+        scrollbarWidth: "0px",
       }}
     >
-      <Box sx={{ width: "100%", maxWidth: "100%",        scrollbarWidth:"0px" }}>
-        
-          <List sx={{backgroundColor:"transparent"}}>
+      <Box sx={{ width: "100%", maxWidth: "100%", scrollbarWidth: "0px" }}>
+        <List sx={{ backgroundColor: "transparent" }}>
+          <ListItem disablePadding>
+            <ListItemButton
+              selected={selectedIndex === "all"}
+              onClick={(event) => handleListItemClick(event, "all")}
+            >
+              <ListItemIcon>
+                <InboxIcon />
+              </ListItemIcon>
+              <ListItemText primary="Tümü" />
+            </ListItemButton>
+          </ListItem>
+          
+          {categories.map((category,key)=>
             <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <InboxIcon />
-                </ListItemIcon>
-                <ListItemText primary="Inbox" />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <InboxIcon />
-                </ListItemIcon>
-                <ListItemText primary="Inbox" />
-              </ListItemButton>
-            </ListItem>
-          </List>
-
-      
+            <ListItemButton
+              selected={selectedIndex === key}
+              onClick={(event) => handleListItemClick(event, key)}
+            >
+              <ListItemIcon>
+                <InboxIcon />
+              </ListItemIcon>
+              <ListItemText primary={category} />
+            </ListItemButton>
+          </ListItem>
+          )}
+        </List>
       </Box>
-      
     </Box>
   );
 };
