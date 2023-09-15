@@ -52,6 +52,7 @@ const ConsumerMenu = () => {
   const cardCount = useSelector((state) => state.card.cardCount);
   const cardList = useSelector((state) => state.card.cardList);
   const cardPrice = useSelector((state) => state.card.cardPrice);
+  const consumerName = useSelector((state) => state.consumerName.value);
 
   const setCardCloseFunc = () => {
     setCardAnchor(null);
@@ -97,7 +98,9 @@ const ConsumerMenu = () => {
                   }}
                 ></TapasIcon>
               ) : null}
-              <Box>222</Box>
+              <Box sx={{
+        fontFamily: 'roboto',
+      }}>Hoşgeldin {consumerName}</Box>
               {isSmall ? (
                 <Badge
                   onClick={setCardOpenFunc}
