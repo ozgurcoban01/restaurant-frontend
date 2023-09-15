@@ -5,6 +5,7 @@ export const consumerTheme = createTheme({
     palette: {
       primary: deepPurple,
       secondary: orange,
+      ochre: red,
     },
     
     components: {

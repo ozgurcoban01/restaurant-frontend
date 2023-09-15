@@ -33,10 +33,8 @@ const MainMenus = () => {
   const selCategory = selCat.selCategory;
   const allMenu = useSelector((state) => state.menu.menu);
   const allCategories = useSelector((state) => state.categories.categories);
-  console.log(selCategory);
-  useEffect(()=>{
-console.log(selCategory)
-  },[selCategory])
+
+
   return (
     <Box
       sx={{
@@ -59,10 +57,12 @@ console.log(selCategory)
           {allMenu.map((menu) => {
             if (menu.category==category) {
               return <MainMenuCard
+              menu={menu}
               title={menu.title}
               price={menu.price}
               category={menu.category}
               image_id={menu.image_id}
+              menu_id={menu._id}
             />;
             }
             return null;

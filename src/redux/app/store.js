@@ -7,6 +7,7 @@ import drawerSlice from '../features/drawerSlice'
 import imagesSlice from '../features/imagesSlice'
 import categorySlice from '../features/categorySlice'
 import selCategorySlice from '../features/selCategorySlice'
+import cardSlice from '../features/cardSlice'
 
 export const store = configureStore({
   reducer: {
@@ -17,7 +18,7 @@ export const store = configureStore({
     consumerName:consumerSlice,
     drawer:drawerSlice,
     categories:categorySlice,
-    selCategory:selCategorySlice
-    
+    selCategory:selCategorySlice,
+    card:cardSlice
   },
 }) 

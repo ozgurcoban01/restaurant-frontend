@@ -14,8 +14,9 @@ import {
   Typography,
   IconButton,
   CardMedia,
+  Button,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   lime,
   purple,
@@ -39,13 +40,19 @@ import InteractiveCard from "./CardMenu";
 import LeftBar from "./LeftBar";
 import RightBar from "./RightBar";
 import MainMenus from "./MainMenus";
-
+import { setCardCount, setCardPrice } from "../../redux/features/cardSlice";
+import CurrencyLiraIcon from "@mui/icons-material/CurrencyLira";
+import PaymentOutlinedIcon from "@mui/icons-material/PaymentOutlined";
 const ConsumerMenu = () => {
   const drawerOpen = useSelector((state) => state.drawer);
   const dispatch = useDispatch();
   const theme = useTheme();
   const [cardAnchor, setCardAnchor] = useState(null);
   const [cardOpen, setCardOpen] = useState(false);
+  const cardCount = useSelector((state) => state.card.cardCount);
+  const cardList = useSelector((state) => state.card.cardList);
+  const cardPrice = useSelector((state) => state.card.cardPrice);
+
   const setCardCloseFunc = () => {
     setCardAnchor(null);
     setCardOpen(false);
@@ -55,6 +62,15 @@ const ConsumerMenu = () => {
     setCardOpen(true);
   };
   const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+  useEffect(() => {
+    let cardPrice = 0;
+    cardList.forEach((cardElement) => {
+      cardPrice += cardElement.price;
+    });
+
+    dispatch(setCardPrice(cardPrice.toFixed(2)));
+    dispatch(setCardCount(cardList.length));
+  }, [cardList]);
   return (
     <>
       <Box
@@ -85,7 +101,7 @@ const ConsumerMenu = () => {
               {isSmall ? (
                 <Badge
                   onClick={setCardOpenFunc}
-                  badgeContent={4}
+                  badgeContent={cardCount}
                   color="secondary"
                 >
                   <ShoppingCartIcon />
@@ -102,18 +118,38 @@ const ConsumerMenu = () => {
           }}
         >
           {!isSmall ? <LeftBar /> : null}
-          <MainMenus/>
-          {!isSmall ? <RightBar  /> : null}
+          <MainMenus />
+          {!isSmall ? <RightBar /> : null}
         </Box>
 
         <ConsumerDrawer />
         <Menu anchorEl={cardAnchor} open={cardOpen} onClose={setCardCloseFunc}>
-          <CardMenu />
+          {cardList.map((menu) => {
+            return <CardMenu menu={menu} />;
+          })}
           <Divider />
-          <CardMenu />
-          <Divider />
-          <CardMenu />
-          <Divider />
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              p: 1,
+            }}
+            color="ochre"
+          >
+            <Button
+              variant="contained"
+              sx={{ fontWeight: "900" }}
+              endIcon={<CurrencyLiraIcon />}
+              color="success"
+            >
+              {cardPrice}
+            </Button>
+            <IconButton color="secondary">
+              <PaymentOutlinedIcon />
+            </IconButton>
+          </Box>
         </Menu>
       </Box>
     </>

@@ -24,24 +24,23 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import AddIcon from '@mui/icons-material/Add';
 import CurrencyLiraIcon from '@mui/icons-material/CurrencyLira';
+import { setCardList } from "../../redux/features/cardSlice";
 
-const MainMenuCard = ({title,price,category,image_id}) => {
+const MainMenuCard = ({menu,title,price,category,image_id,menu_id}) => {
 
   const [imgSrc,setImgSrc]=useState()
   const dispatch=useDispatch()
   const images=useSelector((state)=>state.images.images)
+  const cardList=useSelector((state)=>state.card.cardList)
 
   const selectedImage=images.filter(image => {
     return image._id === image_id;
   });
 
   useEffect( ()=>{
-    console.log()
-    
     var imagesSrcList=[];
 
     selectedImage.forEach(image => {
-
       const imgData=image.buffer.data
 
       var binary = '';
@@ -53,13 +52,16 @@ const MainMenuCard = ({title,price,category,image_id}) => {
       const imgSrc= window.btoa( binary );
       imagesSrcList.push(imgSrc)
     
-
     });
     setImgSrc(imagesSrcList[0])
-    console.log(imgSrc)
-    
    },[])
+
+  const setCardInfo=(menu)=>{
+
+    dispatch(setCardList([...cardList,menu]))
   
+  }
+
   return (
     <Card sx={{width:"100%",minHeight:"18rem",backgroundColor:purple[900],mb:3,color:"white"}}>
         <CardMedia
@@ -76,7 +78,7 @@ const MainMenuCard = ({title,price,category,image_id}) => {
           </Typography>
         </CardContent>
         <CardActions>
-        <Button color="success" variant="contained"   endIcon={<CurrencyLiraIcon />}>{price}</Button>
+          <Button color="success" variant="contained" onClick={()=>setCardInfo(menu)} endIcon={<CurrencyLiraIcon />}>{price}</Button>
         </CardActions>
   
       </Card>
