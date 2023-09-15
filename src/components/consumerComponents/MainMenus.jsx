@@ -34,6 +34,9 @@ const MainMenus = () => {
   const allMenu = useSelector((state) => state.menu.menu);
   const allCategories = useSelector((state) => state.categories.categories);
   console.log(selCategory);
+  useEffect(()=>{
+console.log(selCategory)
+  },[selCategory])
   return (
     <Box
       sx={{
@@ -47,24 +50,26 @@ const MainMenus = () => {
         scrollbarWidth: "0px",
       }}
     >
-      {allCategories.map((category) => (
-        <Box>
+      {allCategories.map((category) => {
+        if(selCategory=="all"||selCategory==category){
+          return <Box>
           <Typography variant="h7" component="h2">
             {category}
           </Typography>
           {allMenu.map((menu) => {
-            if (menu.category==category&&(selCategory==category||selCategory=="all")) {
+            if (menu.category==category) {
               return <MainMenuCard
               title={menu.title}
               price={menu.price}
               category={menu.category}
             />;
             }
-
             return null;
           })}
         </Box>
-      ))}
+        }
+        return null;
+        })}
     </Box>
   );
 };

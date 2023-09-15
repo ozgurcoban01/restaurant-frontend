@@ -12,6 +12,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { setDrawer } from "../../redux/features/drawerSlice";
 import InboxIcon from "@mui/icons-material/Inbox";
+import { setSelCategory } from "../../redux/features/selCategorySlice";
 
 const ConsumerDrawer = () => {
     const drawerOpen = useSelector((state) => state.drawer);
@@ -21,13 +22,14 @@ const ConsumerDrawer = () => {
     const categories = cat.categories;
     
     const [selectedIndex, setSelectedIndex] = React.useState("all");
-    const [selCategory, setSelCategory] = useState("all");
+
 
     console.log(categories);
-    const handleListItemClick = (event, index) => {
+    const handleListItemClick = (event, index,category) => {
+    
       setSelectedIndex(index);
+      dispatch(setSelCategory(category))
     };
-  
   return (
     <Drawer
       anchor="left"
@@ -42,7 +44,7 @@ const ConsumerDrawer = () => {
         <ListItem disablePadding>
             <ListItemButton
               selected={selectedIndex === "all"}
-              onClick={(event) => handleListItemClick(event, "all")}
+              onClick={(event) => handleListItemClick(event,"all", "all")}
             >
               <ListItemIcon>
                 <InboxIcon sx={{ color: "white" , "&&.mui-selected": {
@@ -56,7 +58,7 @@ const ConsumerDrawer = () => {
             <ListItem disablePadding>
             <ListItemButton
               selected={selectedIndex === key}
-              onClick={(event) => handleListItemClick(event, key)}
+              onClick={(event) => handleListItemClick(event, key,category)}
             >
               <ListItemIcon>
                 <InboxIcon sx={{ color: "white" }}/>

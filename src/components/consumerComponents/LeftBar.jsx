@@ -18,17 +18,19 @@ import {
   deepPurple,
 } from "@mui/material/colors";
 import { useDispatch, useSelector } from "react-redux";
+import { setSelCategory } from "../../redux/features/selCategorySlice";
 
 const LeftBar = () => {
   const dispatch=useDispatch()
   const cat = useSelector((state) => state.categories);
   const categories = cat.categories;
   const [selectedIndex, setSelectedIndex] = React.useState("all");
-  const [selCategory, setSelCategory] = useState("all");
+
   console.log(categories);
   const handleListItemClick = (event, index,category) => {
-    dispatch(setSelCategory(category))
+    
     setSelectedIndex(index);
+    dispatch(setSelCategory(category))
   };
 
   return (
@@ -45,7 +47,7 @@ const LeftBar = () => {
           <ListItem disablePadding>
             <ListItemButton
               selected={selectedIndex === "all"}
-              onClick={(event) => handleListItemClick(event, "all")}
+              onClick={(event) => handleListItemClick(event,"all", "all")}
             >
               <ListItemIcon>
                 <InboxIcon />
@@ -53,7 +55,6 @@ const LeftBar = () => {
               <ListItemText primary="Tümü" />
             </ListItemButton>
           </ListItem>
-          
           {categories.map((category,key)=>
             <ListItem disablePadding>
             <ListItemButton
