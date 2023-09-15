@@ -24,12 +24,47 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import AddIcon from '@mui/icons-material/Add';
 import CurrencyLiraIcon from '@mui/icons-material/CurrencyLira';
-const MainMenuCard = ({title,price,category}) => {
+
+const MainMenuCard = ({title,price,category,image_id}) => {
+
+  const [imgSrc,setImgSrc]=useState()
+  const dispatch=useDispatch()
+  const images=useSelector((state)=>state.images.images)
+
+  const selectedImage=images.filter(image => {
+    return image._id === image_id;
+  });
+
+  useEffect( ()=>{
+    console.log()
+    
+    var imagesSrcList=[];
+
+    selectedImage.forEach(image => {
+
+      const imgData=image.buffer.data
+
+      var binary = '';
+      var bytes = new Uint8Array( imgData );
+      var len = bytes.byteLength;
+      for (var i = 0; i < len; i++) {
+        binary += String.fromCharCode( bytes[ i ] );
+      }
+      const imgSrc= window.btoa( binary );
+      imagesSrcList.push(imgSrc)
+    
+
+    });
+    setImgSrc(imagesSrcList[0])
+    console.log(imgSrc)
+    
+   },[])
+  
   return (
     <Card sx={{width:"100%",minHeight:"18rem",backgroundColor:purple[900],mb:3,color:"white"}}>
         <CardMedia
           sx={{ height: 140 }}
-          image="https://picsum.photos/600/100"
+          image={`data:image/png;base64,${imgSrc}`}
           title="green iguana"
         />
         <CardContent>

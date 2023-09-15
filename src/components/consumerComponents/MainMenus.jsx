@@ -62,6 +62,7 @@ console.log(selCategory)
               title={menu.title}
               price={menu.price}
               category={menu.category}
+              image_id={menu.image_id}
             />;
             }
             return null;
