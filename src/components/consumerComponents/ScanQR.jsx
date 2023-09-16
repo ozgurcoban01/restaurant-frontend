@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Html5QrcodeScanner } from "html5-qrcode";
-import { Box, Container } from "@mui/material";
+import { Box, Button, Container } from "@mui/material";
 import {
   lime,
   purple,
@@ -43,9 +43,10 @@ const ScanQR = () => {
       .then(() => {
         setFetchMenu(true);
       });
-
     return;
   };
+
+
 
   const fetchMenuFunc = () => {
     const categoryList = [];
@@ -151,6 +152,11 @@ const ScanQR = () => {
   } else {
     scanResultDiv = <div id="reader"></div>;
   }
+  useEffect(()=>{
+    setLoading(true);
+    setFetchImages(true);
+    setScanResult("asfasdasd");
+  },[])
 
   return (
     <div>
@@ -164,7 +170,9 @@ const ScanQR = () => {
           }}
         >
           {loading ? <CircularProgress /> : scanResultDiv}
+         
         </Container>
+        
       </Box>
     </div>
   );
