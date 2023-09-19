@@ -9,7 +9,7 @@ const Test = () => {
   const [imageSrc, setimageSrc] = useState();
 
   const getImages =async ()=>{
-    const allImages=await (await axios.get("https://pleasant-gloves-deer.cyclic.cloud/image/getAll").then(res => res.data))
+    const allImages=await (await axios.get(`${import.meta.env.VITE_API_URL}/image/getAll`).then(res => res.data))
     
     setImages(allImages)
   }
@@ -20,7 +20,7 @@ const Test = () => {
     formData.append("image", image);
 
     const result = await axios.post(
-      "https://pleasant-gloves-deer.cyclic.cloud/image/post",
+      `${import.meta.env.VITE_API_URL}/image/post`,
       formData,
       {
         headers:{"Content-Type":"multipart/form-data"},

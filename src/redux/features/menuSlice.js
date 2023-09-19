@@ -9,7 +9,7 @@ const initialState={
 export const fetchMenu = createAsyncThunk(
     '',
     async () => {
-      const response = await axios(`https://pleasant-gloves-deer.cyclic.cloud/menu/getAllMenu`)
+      const response = await axios(`${import.meta.env.VITE_API_URL}/menu/getAllMenu`)
 
       return (await response.data)
     }

@@ -10,7 +10,7 @@ const initialState = {
 export const fetchData = createAsyncThunk(
     'getData',
     async () => {
-      const response = await fetch(`https://pleasant-gloves-deer.cyclic.cloud/menu/getAllMenu`)
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/menu/getAllMenu`)
 
       return (await response.json())
     }

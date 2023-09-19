@@ -42,7 +42,7 @@ const EnterName = () => {
       const fetchData = async () => {
         const consumerId = await axios
           .post(
-            "https://pleasant-gloves-deer.cyclic.cloud/consumer/createNewConsumer",
+            `${import.meta.env.VITE_API_URL}/consumer/createNewConsumer`,
             consumer
           )
           .then((res) => res.data._id);

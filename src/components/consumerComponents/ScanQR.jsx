@@ -38,7 +38,7 @@ const ScanQR = () => {
 
   const fetchImagesFunc = async () => {
     const response = await axios(
-      `https://pleasant-gloves-deer.cyclic.cloud/image/getAll`
+      `${import.meta.env.VITE_API_URL}/image/getAll`
     )
       .then((res) => res.data)
       .then((data) => dispatch(setImages(data)))
