@@ -27,6 +27,10 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const MainMenus = () => {
   const selCat = useSelector((state) => state.selCategory);
@@ -34,11 +38,15 @@ const MainMenus = () => {
   const allMenu = useSelector((state) => state.menu.menu);
   const allCategories = useSelector((state) => state.categories.categories);
 
+  const [expanded, setExpanded] = React.useState(false);
+  const handleChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
 
   return (
     <Box
       sx={{
-        width: { sm: "60vw", md: "60vw", xs: "100vw" },
+        width: { xs: "100vw", md: "50vw" },
         height: "80vh",
         backgroundColor: "transparent",
         padding: 5,
@@ -48,29 +56,48 @@ const MainMenus = () => {
         scrollbarWidth: "0px",
       }}
     >
-      {allCategories.map((category) => {
-        if(selCategory=="all"||selCategory==category){
-          return <Box>
-          <Typography variant="h7" component="h2">
-            {category}
-          </Typography>
-          {allMenu.map((menu) => {
-            if (menu.category==category) {
-              return <MainMenuCard
-              menu={menu}
-              title={menu.title}
-              price={menu.price}
-              category={menu.category}
-              image_id={menu.image_id}
-              menu_id={menu._id}
-            />;
-            }
-            return null;
-          })}
-        </Box>
+      {allCategories.map((category, key) => {
+        if (selCategory == "all" || selCategory == category) {
+          return (
+            <Accordion
+              defaultExpanded={true}
+              sx={{ p: 1, backgroundColor: purple[900] }}
+            >
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
+                id={key}
+              >
+                <Typography
+                  sx={{
+                    color: "white",
+                    fontFamily: "roboto",
+                    fontWeight: "900",
+                    fontSize: "larger",
+                  }}
+                >
+                  {category}
+                </Typography>
+              </AccordionSummary>
+              {allMenu.map((menu) => {
+                if (menu.category == category) {
+                  return (
+                    <MainMenuCard
+                      menu={menu}
+                      title={menu.title}
+                      price={menu.price}
+                      category={menu.category}
+                      image_id={menu.image_id}
+                      menu_id={menu._id}
+                    />
+                  );
+                }
+                return null;
+              })}
+            </Accordion>
+          );
         }
         return null;
-        })}
+      })}
     </Box>
   );
 };

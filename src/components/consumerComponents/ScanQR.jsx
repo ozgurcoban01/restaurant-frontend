@@ -18,7 +18,9 @@ import { setTableId } from "../../redux/features/tableSlice";
 import axios from "axios";
 import { setImages } from "../../redux/features/imagesSlice";
 import { setCategories } from "../../redux/features/categorySlice";
-
+import NextPlanIcon from "@mui/icons-material/NextPlan";
+import SkipNextIcon from "@mui/icons-material/SkipNext";
+import RedoIcon from "@mui/icons-material/Redo";
 const ScanQR = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -46,8 +48,6 @@ const ScanQR = () => {
     return;
   };
 
-
-
   const fetchMenuFunc = () => {
     const categoryList = [];
 
@@ -59,7 +59,7 @@ const ScanQR = () => {
       }
     });
     dispatch(setCategories(categoryList));
-  
+
     setTimeout(() => {
       setLoading(false);
       setNavigatePage(true);
@@ -145,18 +145,38 @@ const ScanQR = () => {
   }, []);
 
   let scanResultDiv;
-
+  const skipToEnterName = () => {
+    setLoading(true);
+    setFetchImages(true);
+    setScanResult("DEMO_TABLE_ID");
+  };
+  
   if (navigatePage) {
     dispatch(setTableId(scanResult));
     navigate(`/consumer/enterName`);
   } else {
-    scanResultDiv = <div id="reader"></div>;
+    scanResultDiv = (
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: "column",
+        }}
+      >
+        <div id="reader"></div>{" "}
+        <Button
+          onClick={skipToEnterName}
+          endIcon={<RedoIcon />}
+          variant="contained"
+          size="small"
+          color="error"
+        >
+          QR Taramayı Atla
+        </Button>
+      </Box>
+    );
   }
-  useEffect(()=>{
-    setLoading(true);
-    setFetchImages(true);
-    setScanResult("asfasdasd");
-  },[])
 
   return (
     <div>
@@ -167,12 +187,11 @@ const ScanQR = () => {
             height: "100vh",
             alignItems: "center",
             justifyContent: "center",
+            flexDirection: "column",
           }}
         >
           {loading ? <CircularProgress /> : scanResultDiv}
-         
         </Container>
-        
       </Box>
     </div>
   );

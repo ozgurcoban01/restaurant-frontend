@@ -26,7 +26,6 @@ const LeftBar = () => {
   const categories = cat.categories;
   const [selectedIndex, setSelectedIndex] = React.useState("all");
 
-  console.log(categories);
   const handleListItemClick = (event, index,category) => {
     
     setSelectedIndex(index);

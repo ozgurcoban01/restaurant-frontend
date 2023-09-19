@@ -45,6 +45,7 @@ import CurrencyLiraIcon from "@mui/icons-material/CurrencyLira";
 import PaymentOutlinedIcon from "@mui/icons-material/PaymentOutlined";
 const ConsumerMenu = () => {
   const drawerOpen = useSelector((state) => state.drawer);
+  const tableId = useSelector((state) => state.tableId.value);
   const dispatch = useDispatch();
   const theme = useTheme();
   const [cardAnchor, setCardAnchor] = useState(null);
@@ -62,7 +63,7 @@ const ConsumerMenu = () => {
     setCardAnchor(e.currentTarget);
     setCardOpen(true);
   };
-  const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+  const isSmall = useMediaQuery(theme.breakpoints.down("md"));
   useEffect(() => {
     let cardPrice = 0;
     cardList.forEach((cardElement) => {
@@ -87,7 +88,7 @@ const ConsumerMenu = () => {
               sx={{
                 display: "flex",
                 alignItems: "center",
-                justifyContent: { sm: "center", xs: "space-between" },
+                justifyContent: { md: "center", xs: "space-between" },
               }}
               disableGutters
             >
@@ -117,12 +118,12 @@ const ConsumerMenu = () => {
           sx={{
             display: "flex",
 
-            justifyContent: { sm: "space-between", xs: "center" },
+            justifyContent: { md: "space-between", xs: "center" },
           }}
         >
           {!isSmall ? <LeftBar /> : null}
           <MainMenus />
-          {!isSmall ? <RightBar /> : null}
+          {!isSmall ? <RightBar  cardListProp={cardList}/> : null}
         </Box>
 
         <ConsumerDrawer />
