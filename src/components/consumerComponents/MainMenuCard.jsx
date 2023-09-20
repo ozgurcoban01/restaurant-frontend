@@ -63,7 +63,7 @@ const MainMenuCard = ({menu,title,price,category,image_id,menu_id}) => {
   }
 
   return (
-    <Card sx={{width:"100%",minHeight:"18rem",backgroundColor:purple[100],mb:3}}>
+    <Card sx={{maxWidth:"200px",width:"100%",m:1,minHeight:"300px",borderRadius:5,backgroundColor:purple[100],mb:3}}>
         <CardMedia
           sx={{ height: 140 }}
           image={`data:image/png;base64,${imgSrc}`}

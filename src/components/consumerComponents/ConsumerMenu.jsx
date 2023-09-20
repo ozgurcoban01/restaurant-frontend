@@ -15,7 +15,10 @@ import {
   IconButton,
   CardMedia,
   Button,
+  CircularProgress,
+  Backdrop
 } from "@mui/material";
+import axios from 'axios'
 import React, { useEffect, useState } from "react";
 import {
   lime,
@@ -40,10 +43,14 @@ import InteractiveCard from "./CardMenu";
 import LeftBar from "./LeftBar";
 import RightBar from "./RightBar";
 import MainMenus from "./MainMenus";
-import { setCardCount, setCardPrice } from "../../redux/features/cardSlice";
+import { setCardCount, setCardList, setCardPrice } from "../../redux/features/cardSlice";
 import CurrencyLiraIcon from "@mui/icons-material/CurrencyLira";
 import PaymentOutlinedIcon from "@mui/icons-material/PaymentOutlined";
+import { useParams } from "react-router";
+import VerifiedIcon from '@mui/icons-material/Verified';
 const ConsumerMenu = () => {
+  const [open, setOpen] = React.useState(false);
+  const [sended, setSended] = React.useState(false);
   const drawerOpen = useSelector((state) => state.drawer);
   const tableId = useSelector((state) => state.tableId.value);
   const dispatch = useDispatch();
@@ -54,6 +61,7 @@ const ConsumerMenu = () => {
   const cardList = useSelector((state) => state.card.cardList);
   const cardPrice = useSelector((state) => state.card.cardPrice);
   const consumerName = useSelector((state) => state.consumerName.value);
+  const {consumerId}=useParams()
 
   const setCardCloseFunc = () => {
     setCardAnchor(null);
@@ -73,6 +81,33 @@ const ConsumerMenu = () => {
     dispatch(setCardPrice(cardPrice.toFixed(2)));
     dispatch(setCardCount(cardList.length));
   }, [cardList]);
+
+  const setOrder= async()=>{
+    setOpen(true);
+    setCardOpen(false);
+    const order={
+
+      consumer_id: consumerId,
+      table_id: tableId,
+      menu: cardList,
+      status: "Cooking",
+      price: cardPrice,
+
+    }
+    const newOrder = await axios
+    .post(
+      `${import.meta.env.VITE_API_URL}/order/createNewOrder`,
+      order
+    )
+    .then(()=>{setTimeout(()=>{setSended(true);dispatch(setCardList([])),dispatch(setCardCount(0)),dispatch(setCardPrice(0))},1000)});
+
+  }
+
+  const handleClose = () => {
+    setOpen(false);
+    setSended(false);
+  };
+
   return (
     <>
       <Box
@@ -147,6 +182,7 @@ const ConsumerMenu = () => {
               sx={{ fontWeight: "900" }}
               endIcon={<CurrencyLiraIcon />}
               color="success"
+              onClick={setOrder}
             >
               {cardPrice}
             </Button>
@@ -155,6 +191,16 @@ const ConsumerMenu = () => {
             </IconButton>
           </Box>
         </Menu>
+        <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+        onClick={handleClose}
+      >
+        {sended?<Box sx={{width:"70%",height:"50%",borderRadius:10,backgroundColor:"green",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-evenly"}}>
+        <VerifiedIcon sx={{width:"40%",height:"40%"}}/>
+        <Typography sx={{fontFamily:"roboto",fontSize:"large",fontWeight:"900"}}>Siparişiniz Hazırlanıyor :)</Typography>
+        </Box>:<CircularProgress sx={{color:purple[100]}}/>}
+      </Backdrop>
       </Box>
     </>
   );

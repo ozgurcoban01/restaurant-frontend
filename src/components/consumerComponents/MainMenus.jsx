@@ -78,6 +78,7 @@ const MainMenus = () => {
                   {category}
                 </Typography>
               </AccordionSummary>
+              <Box sx={{display:"flex",flexWrap:"wrap",justifyContent:"center"}}>
               {allMenu.map((menu) => {
                 if (menu.category == category) {
                   return (
@@ -93,6 +94,7 @@ const MainMenus = () => {
                 }
                 return null;
               })}
+              </Box>
             </Accordion>
           );
         }
