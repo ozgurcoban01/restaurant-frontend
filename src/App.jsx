@@ -16,8 +16,10 @@ import Test from "./components/kitchenComponents/Test";
 import ConsumerMenuK from "./components/kitchenComponents/ConsumerMenu";
 import ConsumerDrawer from "./components/consumerComponents/ConsumerDrawer";
 import ConsumerMenu from "./components/consumerComponents/ConsumerMenu";
+import AdminPanel from "./components/kitchenComponents/AdminPanel";
 
 function App() {
+  
   const counter = useSelector((state) => state.counter.value);
   const menu = useSelector((state) => state.menu.menu);
 
@@ -38,6 +40,7 @@ function App() {
             <Route path="consumerSelect/:consumerId" element={<ConsumerSelect />} />
           </Route>
           <Route path="kitchen" >
+            <Route path="admin" element={<AdminPanel />} />
             <Route path="test" element={<Test />} />
             <Route path="menu" element={<ConsumerDrawer />} />
          </Route>

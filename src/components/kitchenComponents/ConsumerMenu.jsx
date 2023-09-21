@@ -1,86 +1,209 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import Button from '@mui/material/Button';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import {
-    lime,
-    purple,
-    red,
-    green,
-    orange,
-    deepOrange,
-    deepPurple,
-  } from "@mui/material/colors";
-const ConsumerMenuK = () => {
-    const [state, setState] = React.useState({
-        top: false,
-        left: false,
-        bottom: false,
-        right: false,
-      });
-    
-      const toggleDrawer = (anchor, open) => (event) => {
-        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-          return;
-        }
-    
-        setState({ ...state, [anchor]: open });
-      };
-    
-      const list = (anchor) => (
-        <Box
-          sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 ,backgroundColor:purple[100],height:"100%"}}
-          role="presentation"
-          onClick={toggleDrawer(anchor, false)}
-          onKeyDown={toggleDrawer(anchor, false)}
-        >
-          <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-          <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-        </Box>
-      );
+  AppBar,
+  Container,
+  Toolbar,
+  Box,
+  useMediaQuery,
+  useTheme,
+  Badge,
+  Menu,
+  MenuItem,
+  Divider,
+  Card,
+  CardContent,
+  Typography,
+  IconButton,
+  CardMedia,
+  Button,
+  CircularProgress,
+  Backdrop
+} from "@mui/material";
+import axios from 'axios'
+import React, { useEffect, useState } from "react";
+import {
+  lime,
+  purple,
+  red,
+  green,
+  orange,
+  deepOrange,
+  deepPurple,
+} from "@mui/material/colors";
+import TapasIcon from "@mui/icons-material/Tapas";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import SkipNextIcon from "@mui/icons-material/SkipNext";
+import { useDispatch, useSelector } from "react-redux";
+import { setDrawer } from "../../redux/features/drawerSlice";
+import ConsumerDrawer from "./ConsumerDrawer";
+import AspectRatio from "@mui/joy/AspectRatio";
+import CardMenu from "./CardMenu";
+import InteractiveCard from "./CardMenu";
+import LeftBar from "./LeftBar";
+import RightBar from "./RightBar";
+import MainMenus from "./MainMenus";
+import { setCardCount, setCardList, setCardPrice } from "../../redux/features/cardSlice";
+import CurrencyLiraIcon from "@mui/icons-material/CurrencyLira";
+import PaymentOutlinedIcon from "@mui/icons-material/PaymentOutlined";
+import { useParams } from "react-router";
+import VerifiedIcon from '@mui/icons-material/Verified';
+const ConsumerMenu = () => {
+  const [open, setOpen] = React.useState(false);
+  const [sended, setSended] = React.useState(false);
+  const drawerOpen = useSelector((state) => state.drawer);
+  const tableId = useSelector((state) => state.tableId.value);
+  const dispatch = useDispatch();
+  const theme = useTheme();
+  const [cardAnchor, setCardAnchor] = useState(null);
+  const [cardOpen, setCardOpen] = useState(false);
+  const cardCount = useSelector((state) => state.card.cardCount);
+  const cardList = useSelector((state) => state.card.cardList);
+  const cardPrice = useSelector((state) => state.card.cardPrice);
+  const consumerName = useSelector((state) => state.consumerName.value);
+  const {consumerId}=useParams()
+
+  const setCardCloseFunc = () => {
+    setCardAnchor(null);
+    setCardOpen(false);
+  };
+  const setCardOpenFunc = (e) => {
+    setCardAnchor(e.currentTarget);
+    setCardOpen(true);
+  };
+  const isSmall = useMediaQuery(theme.breakpoints.down("md"));
+  useEffect(() => {
+    let cardPrice = 0;
+    cardList.forEach((cardElement) => {
+      cardPrice += cardElement.price;
+    });
+
+    dispatch(setCardPrice(cardPrice.toFixed(2)));
+    dispatch(setCardCount(cardList.length));
+  }, [cardList]);
+
+  const setOrder= async()=>{
+    setOpen(true);
+    setCardOpen(false);
+    const order={
+
+      consumer_id: consumerId,
+      table_id: tableId,
+      menu: cardList,
+      status: "Cooking",
+      price: cardPrice,
+
+    }
+    const newOrder = await axios
+    .post(
+      `${import.meta.env.VITE_API_URL}/order/createNewOrder`,
+      order
+    )
+    .then(()=>{setTimeout(()=>{setSended(true);dispatch(setCardList([])),dispatch(setCardCount(0)),dispatch(setCardPrice(0))},1000)});
+
+  }
+
+  const handleClose = () => {
+    setOpen(false);
+    setSended(false);
+  };
+
   return (
     <>
-        <Button  onClick={toggleDrawer('left', true)}>left</Button>
-          <Drawer
-            anchor={'left'}
-            open={state['left']}
-            onClose={toggleDrawer('left', false)}
+      <Box
+        sx={{
+          miNWidth: "100vw",
+          minHeight: "100vh",
+          backgroundColor: purple[100],
+        }}
+      >
+        <AppBar position="static">
+          <Container maxWidth="xl">
+            <Toolbar
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: { md: "center", xs: "space-between" },
+              }}
+              disableGutters
+            >
+              {isSmall ? (
+                <TapasIcon
+                  onClick={() => {
+                    dispatch(setDrawer(true));
+                  }}
+                ></TapasIcon>
+              ) : null}
+              <Box sx={{
+        fontFamily: 'roboto',
+      }}>Hoşgeldin {consumerName}</Box>
+              {isSmall ? (
+                <Badge
+                  onClick={setCardOpenFunc}
+                  badgeContent={cardCount}
+                  color="secondary"
+                >
+                  <ShoppingCartIcon />
+                </Badge>
+              ) : null}
+            </Toolbar>
+          </Container>
+        </AppBar>
+        <Box
+          sx={{
+            display: "flex",
+
+            justifyContent: { md: "space-between", xs: "center" },
+          }}
+        >
+          {!isSmall ? <LeftBar /> : null}
+          <MainMenus />
+          {!isSmall ? <RightBar  cardListProp={cardList}/> : null}
+        </Box>
+
+        <ConsumerDrawer />
+        <Menu anchorEl={cardAnchor} open={cardOpen} onClose={setCardCloseFunc}>
+          {cardList.map((menu) => {
+            return <CardMenu menu={menu} />;
+          })}
+          <Divider />
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              p: 1,
+            }}
+            color="ochre"
           >
-            {list('left')}
-          </Drawer>
+            <Button
+              variant="contained"
+              sx={{ fontWeight: "900" }}
+              endIcon={<CurrencyLiraIcon />}
+              color="success"
+              onClick={setOrder}
+            >
+              {cardPrice}
+            </Button>
+            <IconButton color="secondary">
+              <PaymentOutlinedIcon />
+            </IconButton>
+          </Box>
+        </Menu>
+        <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+        onClick={handleClose}
+      >
+        {sended?<Box sx={{width:"70%",height:"50%",borderRadius:10,backgroundColor:"green",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-evenly"}}>
+        <VerifiedIcon sx={{width:"40%",height:"40%"}}/>
+        <Typography sx={{fontFamily:"roboto",fontSize:"large",fontWeight:"900"}}>Siparişiniz Hazırlanıyor :)</Typography>
+        </Box>:<CircularProgress sx={{color:purple[100]}}/>}
+      </Backdrop>
+      </Box>
     </>
   );
-}
+};
 
-export default ConsumerMenuK
+export default ConsumerMenu;
