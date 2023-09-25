@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Html5QrcodeScanner } from "html5-qrcode";
-import { Box, Button, Container } from "@mui/material";
+import { Box, Button, Container, fabClasses } from "@mui/material";
 import {
   lime,
   purple,
@@ -21,6 +21,7 @@ import { setCategories } from "../../redux/features/categorySlice";
 import NextPlanIcon from "@mui/icons-material/NextPlan";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
 import RedoIcon from "@mui/icons-material/Redo";
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 const ScanQR = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ const ScanQR = () => {
   const [fetchMenu, setFetchMenu] = useState();
   const [fetchImages, setFetchImages] = useState();
   const [navigatePage, setNavigatePage] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const allImages = useSelector((state) => state.images);
   const allMenus = useSelector((state) => state.menu);
@@ -89,7 +91,6 @@ const ScanQR = () => {
 
     const success = (result) => {
       setLoading(true);
-
       setFetchImages(true);
       setScanResult(result);
       scanner.clear();
@@ -150,10 +151,24 @@ const ScanQR = () => {
     setFetchImages(true);
     setScanResult("DEMO_TABLE_ID");
   };
-  
+  const skipToAdmin = () => {
+    console.log(isAdmin)
+    setIsAdmin(true)
+    setLoading(true);
+    setFetchImages(true);
+    setScanResult("DEMO_TABLE_ID");
+  };
   if (navigatePage) {
     dispatch(setTableId(scanResult));
-    navigate(`/consumer/enterName`);
+    console.log(isAdmin)
+    if(isAdmin){
+      navigate(`/kitchen/admin`);
+ 
+    }else{
+      navigate(`/consumer/enterName`);
+      
+    }
+  
   } else {
     scanResultDiv = (
       <Box
@@ -171,8 +186,19 @@ const ScanQR = () => {
           variant="contained"
           size="small"
           color="error"
+          sx={{mt:1}}
         >
           QR Taramayı Atla
+        </Button>
+        <Button
+          onClick={skipToAdmin}
+          endIcon={<AdminPanelSettingsIcon />}
+          variant="contained"
+          size="small"
+          color="warning"
+          sx={{mt:1}}
+        >
+          Admin Girişi
         </Button>
       </Box>
     );

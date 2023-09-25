@@ -21,6 +21,7 @@ import { setCategories } from "../../redux/features/categorySlice";
 import NextPlanIcon from "@mui/icons-material/NextPlan";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
 import RedoIcon from "@mui/icons-material/Redo";
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 const ScanQR = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -89,7 +90,6 @@ const ScanQR = () => {
 
     const success = (result) => {
       setLoading(true);
-
       setFetchImages(true);
       setScanResult(result);
       scanner.clear();
@@ -150,7 +150,12 @@ const ScanQR = () => {
     setFetchImages(true);
     setScanResult("DEMO_TABLE_ID");
   };
-  
+  const skipToAdmin = () => {
+    setLoading(true);
+    setFetchImages(true);
+    setScanResult("DEMO_TABLE_ID");
+    navigate(`/kitchen/admin`);
+  };
   if (navigatePage) {
     dispatch(setTableId(scanResult));
     navigate(`/consumer/enterName`);
@@ -173,6 +178,15 @@ const ScanQR = () => {
           color="error"
         >
           QR Taramayı Atla
+        </Button>
+        <Button
+          onClick={skipToAdmin}
+          endIcon={<AdminPanelSettingsIcon />}
+          variant="contained"
+          size="small"
+          color="error"
+        >
+          Admin Girişi
         </Button>
       </Box>
     );

@@ -1,5 +1,5 @@
 import { Box, Drawer, List,ListItem, ListItemButton,ListItemIcon, ListItemText } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   lime,
   purple,
@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setDrawer } from "../../redux/features/drawerSlice";
 import InboxIcon from "@mui/icons-material/Inbox";
 import { setSelCategory } from "../../redux/features/selCategorySlice";
+import { setAdminPage } from "../../redux/features/adminSelPage";
 
 const ConsumerDrawer = () => {
     const drawerOpen = useSelector((state) => state.drawer);
@@ -20,14 +21,21 @@ const ConsumerDrawer = () => {
   
     const cat = useSelector((state) => state.categories);
     const categories = cat.categories;
-    
-    const [selectedIndex, setSelectedIndex] = React.useState("all");
+    const [allMenus,setAllMenus] = React.useState("all");
+    const menus=["Menü Ekle","Kategori Ekle","Masa Ekle"]
+    const adminPage=useSelector((state)=>state.adminPage.page)
+    const [selectedIndex, setSelectedIndex] = React.useState("Menü Ekle");
 
-    const handleListItemClick = (event, index,category) => {
+    const handleListItemClick = (event, index,menu) => {
     
       setSelectedIndex(index);
-      dispatch(setSelCategory(category))
+      dispatch(setAdminPage(menu))
     };
+
+    useEffect(()=>{
+      console.log(adminPage)
+        },[adminPage])
+      
   return (
     <Drawer
       anchor="left"
@@ -39,29 +47,16 @@ const ConsumerDrawer = () => {
     >
       <Box sx={{ width: "100%",height:"100%", backgroundColor: purple[900],color:"white" }}>
         <List component="nav" aria-label="secondary mailbox folder">
-        <ListItem disablePadding>
-            <ListItemButton
-              selected={selectedIndex === "all"}
-              onClick={(event) => handleListItemClick(event,"all", "all")}
-            >
-              <ListItemIcon>
-                <InboxIcon sx={{ color: "white" , "&&.mui-selected": {
-        backgroundcolor: "pink"
-      }}}/>
-              </ListItemIcon>
-              <ListItemText primary="Tümü" />
-            </ListItemButton>
-          </ListItem>
-          {categories.map((category,key)=>
+        {menus.map((menu,key)=>
             <ListItem disablePadding>
             <ListItemButton
-              selected={selectedIndex === key}
-              onClick={(event) => handleListItemClick(event, key,category)}
+              selected={menu==adminPage?true:false}
+              onClick={(event) => handleListItemClick(event,key,menu)}
             >
               <ListItemIcon>
-                <InboxIcon sx={{ color: "white" }}/>
+                <InboxIcon />
               </ListItemIcon>
-              <ListItemText primary={category} />
+              <ListItemText primary={menu} />
             </ListItemButton>
           </ListItem>
           )}

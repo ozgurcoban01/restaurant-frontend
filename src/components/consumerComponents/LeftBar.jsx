@@ -42,9 +42,10 @@ const LeftBar = () => {
       }}
     >
       <Box sx={{ width: "100%", maxWidth: "100%", scrollbarWidth: "0px" }}>
-        <List sx={{ backgroundColor: "transparent" }}>
-          <ListItem disablePadding>
-            <ListItemButton
+        <List sx={{ backgroundColor: "transparent" }} >
+          <ListItem disablePadding sx={{pb:1}}>
+            <ListItemButton 
+              sx={{borderRadius:"0 50px 50px 0"}}
               selected={selectedIndex === "all"}
               onClick={(event) => handleListItemClick(event,"all", "all")}
             >
@@ -55,8 +56,9 @@ const LeftBar = () => {
             </ListItemButton>
           </ListItem>
           {categories.map((category,key)=>
-            <ListItem disablePadding>
+            <ListItem disablePadding sx={{pb:1}}>
             <ListItemButton
+            sx={{borderRadius:"0 50px 50px 0"}}
               selected={selectedIndex === key}
               onClick={(event) => handleListItemClick(event, key,category)}
             >

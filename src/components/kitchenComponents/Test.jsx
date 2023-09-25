@@ -79,7 +79,7 @@ const Test = () => {
         <button type="submit">gönder</button>
       </form>
       
-      {srcImage.map(e=>   <img style={{width:"800px"}} src={`data:image/png;base64,${e}`} />
+      {srcImage.map(e=><img style={{width:"800px"}} src={`data:image/png;base64,${e}`} />
          )}
       
    </div>

@@ -31,12 +31,14 @@ import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import MenuAddForm from "./Forms/MenuAddForm";
 
 const MainMenus = () => {
   const selCat = useSelector((state) => state.selCategory);
   const selCategory = selCat.selCategory;
   const allMenu = useSelector((state) => state.menu.menu);
   const allCategories = useSelector((state) => state.categories.categories);
+  const adminPage=useSelector((state)=>state.adminPage.page)
 
   const [expanded, setExpanded] = React.useState(false);
   const handleChange = (panel) => (event, isExpanded) => {
@@ -48,7 +50,7 @@ const MainMenus = () => {
       sx={{
         width: { xs: "100vw", md: "80vw" },
         height: "80vh",
-        backgroundColor: "red",
+        backgroundColor: "transparent",
         padding: 5,
 
         display: "flex",
@@ -57,7 +59,7 @@ const MainMenus = () => {
         scrollbarWidth: "0px",
       }}
     >
-      asfasdasd
+      <MenuAddForm/>
     </Box>
   );
 };
