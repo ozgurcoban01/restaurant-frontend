@@ -34,9 +34,6 @@ const LeftBar = () => {
     setSelectedIndex(index);
     dispatch(setAdminPage(menu))
   };
-  useEffect(()=>{
-console.log(adminPage)
-  },[adminPage])
 
   return (
     <Box

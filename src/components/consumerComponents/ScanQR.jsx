@@ -152,7 +152,7 @@ const ScanQR = () => {
     setScanResult("DEMO_TABLE_ID");
   };
   const skipToAdmin = () => {
-    console.log(isAdmin)
+
     setIsAdmin(true)
     setLoading(true);
     setFetchImages(true);
@@ -160,7 +160,7 @@ const ScanQR = () => {
   };
   if (navigatePage) {
     dispatch(setTableId(scanResult));
-    console.log(isAdmin)
+
     if(isAdmin){
       navigate(`/kitchen/admin`);
  

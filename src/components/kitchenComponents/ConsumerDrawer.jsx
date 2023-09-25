@@ -32,9 +32,7 @@ const ConsumerDrawer = () => {
       dispatch(setAdminPage(menu))
     };
 
-    useEffect(()=>{
-      console.log(adminPage)
-        },[adminPage])
+
       
   return (
     <Drawer
