@@ -33,6 +33,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MenuAddForm from "./Forms/MenuAddForm";
 import CategoryAddForm from "./Forms/CategoryAddForm";
+import OrderMenu from "./Forms/OrderMenu";
 
 const MainMenus = () => {
   const selCat = useSelector((state) => state.selCategory);
@@ -66,6 +67,8 @@ const MainMenus = () => {
             return <MenuAddForm/>
           case 'Kategori Ekle':
             return <CategoryAddForm/>
+            case 'Masa Ekle':
+            return <OrderMenu/>
           default:
             return null
         }

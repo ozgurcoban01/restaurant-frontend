@@ -43,11 +43,12 @@ const CategoryAddForm = () => {
               dispatch(setCategories(tempCategories))
               
             })
-            fetchCategoryFunc2()
+            setTimeout(fetchCategoryFunc2,1000)
           return;
       };
 
       const fetchCategoryFunc2 = async () => {
+     
         const response = await axios(
             `${import.meta.env.VITE_API_URL}/category/getAllCategory`
           )
@@ -68,8 +69,6 @@ const CategoryAddForm = () => {
    
 
     const submitImage = async (e) => {
-
-        
 
         const submitedCategory={
             "name":category

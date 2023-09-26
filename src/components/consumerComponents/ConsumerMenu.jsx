@@ -87,7 +87,6 @@ const ConsumerMenu = () => {
     setOpen(true);
     setCardOpen(false);
     const order={
-
       consumer_id: consumerId,
       table_id: tableId,
       menu: cardList,
