@@ -26,13 +26,12 @@ import CurrencyLiraIcon from '@mui/icons-material/CurrencyLira';
 
 const OrderMenuCard = ({order}) => {
     const [consumerName,setConsumerName]=useState("")
-    const [tableName,setTableName]=useState("")
-    const [price,setPrice]=useState(0)
-    const [menu,setMenu]=useState([])
+
 
     const getConsumerName=async()=>{
-        const response = await axios(
-            `${import.meta.env.VITE_API_URL}/category/getAllCategory`
+        const response = await axios.post(
+            `${import.meta.env.VITE_API_URL}/table/getTable/64dfefc546736e4933d6ddbe`
+            
           )
             .then((res) => res.data)
             .then((data)=>{
@@ -51,13 +50,9 @@ const OrderMenuCard = ({order}) => {
           return;
     }
     
+    getConsumerName()
 
-    useEffect(()=>{
-        getConsumerName()
-        getTableName()
-        setPrice(order.price)
-        setMenu(order.menu)
-    },[])
+    console.log(consumerName)
   return (
     <Box>
         
