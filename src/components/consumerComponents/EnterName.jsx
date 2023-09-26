@@ -23,7 +23,8 @@ const EnterName = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch()
   const tableId = useSelector((state) => state.tableId);
- 
+  const cat = useSelector((state) => state.categories.categories);
+ console.log(cat)
   const [loading, setLoading] = useState(false);
   const [consumerName, setConsumerName] = useState("");
 

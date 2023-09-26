@@ -36,6 +36,8 @@ const MainMenus = () => {
   const selCat = useSelector((state) => state.selCategory);
   const selCategory = selCat.selCategory;
   const allMenu = useSelector((state) => state.menu.menu);
+  //const [allCategories,setAllCategories] = useState(["Makarnalar"]);
+  
   const allCategories = useSelector((state) => state.categories.categories);
 
   const [expanded, setExpanded] = React.useState(false);

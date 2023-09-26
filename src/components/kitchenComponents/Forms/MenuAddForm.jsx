@@ -5,25 +5,31 @@ import {
   Typography,
   Button,
   Skeleton,
+  Snackbar ,
+  Alert,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/material/styles";
 import axios from "axios";
 import SendIcon from "@mui/icons-material/Send";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import LoadingButton from "@mui/lab/LoadingButton";
+import { setCategories } from "../../../redux/features/categorySlice";
 
 const MenuAddForm = () => {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState(0);
   const [category, setCategory] = useState("");
+  //const [categories, setCategories] = useState([]);
 
   const [loading, setLoading] = React.useState(false);
 
   const [postMenu, setPostMenu] = useState({});
+  const dispatch=useDispatch()
   const categories = useSelector((state) => state.categories.categories);
+
   useEffect(() => {}, []);
 
   const VisuallyHiddenInput = styled("input")({
@@ -42,7 +48,7 @@ const MenuAddForm = () => {
    */
   const [images, setImages] = useState([]);
   const [selectedImage, setSelectedImage] = useState(false);
-
+  const [open, setOpen] = React.useState(false);
   const [image, setImage] = useState();
   const [submitFinished, setSubmitFinished] = useState(false);
   const [src, setSrc] = useState([]);
@@ -66,10 +72,16 @@ const MenuAddForm = () => {
     const result = await axios.post(
       `${import.meta.env.VITE_API_URL}/menu/createNewMenuItem`,
       postMenu
-    );
+    ).then((e)=>{setSubmitFinished(false),setOpen(true)});
     
   }
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
 
+    setOpen(false);
+  };
   const submitImage = async (e) => {
     setLoading(true);
     setSended(true);
@@ -244,6 +256,11 @@ const MenuAddForm = () => {
           </Box>
         ) : null
       )}
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+  <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+    Menü Eklendi
+  </Alert>
+</Snackbar>
     </>
   );
 };

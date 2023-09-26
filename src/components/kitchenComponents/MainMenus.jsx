@@ -32,6 +32,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MenuAddForm from "./Forms/MenuAddForm";
+import CategoryAddForm from "./Forms/CategoryAddForm";
 
 const MainMenus = () => {
   const selCat = useSelector((state) => state.selCategory);
@@ -45,6 +46,7 @@ const MainMenus = () => {
     setExpanded(isExpanded ? panel : false);
   };
 
+
   return (
     <Box
       sx={{
@@ -52,14 +54,22 @@ const MainMenus = () => {
         height: "80vh",
         backgroundColor: "transparent",
         padding: 5,
-
         display: "flex",
         flexDirection: "column",
         overflowY: "scroll",
         scrollbarWidth: "0px",
       }}
     >
-      <MenuAddForm/>
+      {(() => {
+        switch (adminPage) {
+          case 'Menü Ekle':
+            return <MenuAddForm/>
+          case 'Kategori Ekle':
+            return <CategoryAddForm/>
+          default:
+            return null
+        }
+      })()}
     </Box>
   );
 };

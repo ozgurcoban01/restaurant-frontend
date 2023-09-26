@@ -31,12 +31,34 @@ const ScanQR = () => {
   const [timeOut, setTimeOut] = useState();
   const [fetchMenu, setFetchMenu] = useState();
   const [fetchImages, setFetchImages] = useState();
+  const [fetchCategory, setFetchCategory] = useState();
   const [navigatePage, setNavigatePage] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
   const allImages = useSelector((state) => state.images);
   const allMenus = useSelector((state) => state.menu);
   const allCategories = useSelector((state) => state.categories);
+
+  const fetchCategoryFunc = async () => {
+    const response = await axios(
+      `${import.meta.env.VITE_API_URL}/category/getAllCategory`
+    )
+      .then((res) => res.data)
+      .then((data)=>{
+        const tempCategories=[]
+        if(data.length>0){
+          data.forEach(element => {
+            tempCategories.push(element.name)
+          });
+        }
+        dispatch(setCategories(tempCategories))
+      })
+      .then(() => {
+        setFetchMenu(true);
+      });
+    return;
+  };
+
 
   const fetchImagesFunc = async () => {
     const response = await axios(
@@ -45,12 +67,13 @@ const ScanQR = () => {
       .then((res) => res.data)
       .then((data) => dispatch(setImages(data)))
       .then(() => {
-        setFetchMenu(true);
+        setFetchCategory(true);
       });
     return;
   };
 
   const fetchMenuFunc = () => {
+/*
     const categoryList = [];
 
     allMenus.menu.forEach((menu) => {
@@ -60,8 +83,7 @@ const ScanQR = () => {
         categoryList.push(menu.category);
       }
     });
-    dispatch(setCategories(categoryList));
-
+   */
     setTimeout(() => {
       setLoading(false);
       setNavigatePage(true);
@@ -79,6 +101,12 @@ const ScanQR = () => {
       fetchMenuFunc();
     }
   }, [fetchMenu]);
+
+  useEffect(() => {
+    if (fetchCategory != null) {
+      fetchCategoryFunc();
+    }
+  }, [fetchCategory]);
 
   useEffect(() => {
     const scanner = new Html5QrcodeScanner("reader", {
