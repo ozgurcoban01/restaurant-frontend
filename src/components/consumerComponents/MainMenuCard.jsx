@@ -80,7 +80,6 @@ const MainMenuCard = ({menu,title,price,category,image_id,menu_id}) => {
         <CardActions>
           <Button color="success" variant="contained" onClick={()=>setCardInfo(menu)} endIcon={<CurrencyLiraIcon />}>{price}</Button>
         </CardActions>
-  
       </Card>
   )
 }

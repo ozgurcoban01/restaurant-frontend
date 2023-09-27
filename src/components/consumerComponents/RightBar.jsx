@@ -25,7 +25,7 @@ import {
 } from "@mui/material/colors";
 import { Backdrop, Button, Chip, CircularProgress } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { setCardList } from "../../redux/features/cardSlice";
+import { setCardCount, setCardList, setCardPrice } from "../../redux/features/cardSlice";
 import CardMenu from "./CardMenu";
 import CardMenuDesktop from "./CardMenuDesktop";
 import { useParams } from "react-router";
@@ -39,20 +39,22 @@ const RightBar = ({ cardListProp }) => {
   const cardPrice = useSelector((state) => state.card.cardPrice);
   const cardCount = useSelector((state) => state.card.cardCount);
   const cardList = useSelector((state) => state.card.cardList);
-  const tableId = useSelector((state) => state.tableId.value);
+  const tableId = useSelector((state) => state.table.id);
+  const tableName = useSelector((state) => state.table.name);
+  const consumerName = useSelector((state) => state.consumer.name);
   const {consumerId}=useParams()
 
 
   const setOrder= async()=>{
     setOpen(true);
     const order={
-
       consumer_id: consumerId,
+      consumer_name:consumerName,
       table_id: tableId,
+      table_name: tableName,
       menu: cardList,
       status: "Cooking",
       price: cardPrice,
-
     }
     const newOrder = await axios
     .post(

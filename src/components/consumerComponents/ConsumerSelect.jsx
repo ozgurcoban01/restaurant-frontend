@@ -4,7 +4,7 @@ import { useParams } from 'react-router'
 
 const ConsumerSelect = () => {
   const consumerId=useParams()
-  const consumerName=useSelector((state)=>state.consumerName)
+  const consumerName=useSelector((state)=>state.consumer.name)
   const allImages = useSelector((state) => state.images);
   const allMenus = useSelector((state) => state.menu);
   const allCategories = useSelector((state) => state.categories);
@@ -12,7 +12,7 @@ const ConsumerSelect = () => {
   console.log(allMenus)
   console.log(allCategories)
   return (
-    <div>ConsumerSelected: {consumerId.consumerId} {consumerName.value}</div>
+    <div>ConsumerSelected: {consumerId.consumerId} {consumerName}</div>
   )
 }
 

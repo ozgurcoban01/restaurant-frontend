@@ -52,7 +52,8 @@ const ConsumerMenu = () => {
   const [open, setOpen] = React.useState(false);
   const [sended, setSended] = React.useState(false);
   const drawerOpen = useSelector((state) => state.drawer);
-  const tableId = useSelector((state) => state.tableId.value);
+  const tableId = useSelector((state) => state.table.id);
+  const tableName = useSelector((state) => state.table.name);
   const dispatch = useDispatch();
   const theme = useTheme();
   const [cardAnchor, setCardAnchor] = useState(null);
@@ -60,7 +61,7 @@ const ConsumerMenu = () => {
   const cardCount = useSelector((state) => state.card.cardCount);
   const cardList = useSelector((state) => state.card.cardList);
   const cardPrice = useSelector((state) => state.card.cardPrice);
-  const consumerName = useSelector((state) => state.consumerName.value);
+  const consumerName = useSelector((state) => state.consumer.name);
   const {consumerId}=useParams()
 
   const setCardCloseFunc = () => {
@@ -86,14 +87,17 @@ const ConsumerMenu = () => {
   const setOrder= async()=>{
     setOpen(true);
     setCardOpen(false);
+
     const order={
       consumer_id: consumerId,
+      consumer_name:consumerName,
       table_id: tableId,
+      table_name: tableName,
       menu: cardList,
       status: "Cooking",
       price: cardPrice,
-
     }
+    console.log(order)
     const newOrder = await axios
     .post(
       `${import.meta.env.VITE_API_URL}/order/createNewOrder`,

@@ -56,7 +56,7 @@ const LeftBar = () => {
             </ListItemButton>
           </ListItem>
           {categories.map((category,key)=>
-            <ListItem disablePadding sx={{pb:1}}>
+            <ListItem key={key} disablePadding sx={{pb:1}}>
             <ListItemButton
             sx={{borderRadius:"0 50px 50px 0"}}
               selected={selectedIndex === key}

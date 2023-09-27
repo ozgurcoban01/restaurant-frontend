@@ -22,7 +22,7 @@ import { setConsumerNameRedux } from "../../redux/features/consumerSlice";
 const EnterName = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch()
-  const tableId = useSelector((state) => state.tableId);
+  const tableId = useSelector((state) => state.table.tableId);
  
   const [loading, setLoading] = useState(false);
   const [consumerName, setConsumerName] = useState("");

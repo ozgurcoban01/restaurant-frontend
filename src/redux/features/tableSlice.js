@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  value: "",
+  id: "",
+  name: "",
 };
 
 export const tableSlice = createSlice({
@@ -9,10 +10,13 @@ export const tableSlice = createSlice({
   initialState,
   reducers: {
     setTableId: (state, action) => {
-      state.value = action.payload;
+      state.id = action.payload;
+    },
+    setTableName: (state, action) => {
+      state.name = action.payload;
     },
   },
 });
 
-export const { setTableId } = tableSlice.actions;
+export const { setTableId,setTableName } = tableSlice.actions;
 export default tableSlice.reducer;

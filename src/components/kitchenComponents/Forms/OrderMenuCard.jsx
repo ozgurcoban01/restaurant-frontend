@@ -25,37 +25,10 @@ import CurrencyLiraIcon from '@mui/icons-material/CurrencyLira';
 
 
 const OrderMenuCard = ({order}) => {
-    const [consumerName,setConsumerName]=useState("")
 
-
-    const getConsumerName=async()=>{
-        const response = await axios.post(
-            `${import.meta.env.VITE_API_URL}/table/getTable/64dfefc546736e4933d6ddbe`
-            
-          )
-            .then((res) => res.data)
-            .then((data)=>{
-                setConsumerName(data)
-            })
-          return;
-    }
-    const getTableName=async()=>{
-        const response = await axios(
-            `${import.meta.env.VITE_API_URL}/category/getAllCategory`
-          )
-            .then((res) => res.data)
-            .then((data)=>{
-                setTableName(data)
-            })
-          return;
-    }
-    
-    getConsumerName()
-
-    console.log(consumerName)
   return (
     <Box>
-        
+    
     </Box>
   )
 }

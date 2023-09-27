@@ -14,7 +14,7 @@ import "../../index.css";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setTableId } from "../../redux/features/tableSlice";
+import { setTableId, setTableName } from "../../redux/features/tableSlice";
 import axios from "axios";
 import { setImages } from "../../redux/features/imagesSlice";
 import { setCategories } from "../../redux/features/categorySlice";
@@ -22,6 +22,7 @@ import NextPlanIcon from "@mui/icons-material/NextPlan";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
 import RedoIcon from "@mui/icons-material/Redo";
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import { setOrder } from "../../redux/features/orderSlice";
 const ScanQR = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -32,13 +33,30 @@ const ScanQR = () => {
   const [fetchMenu, setFetchMenu] = useState();
   const [fetchImages, setFetchImages] = useState();
   const [fetchCategory, setFetchCategory] = useState();
+  const [fetchTableName, setFetchTableName] = useState();
+  const [fetchOrder, setFetchOrder] = useState();
   const [navigatePage, setNavigatePage] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
   const allImages = useSelector((state) => state.images);
   const allMenus = useSelector((state) => state.menu);
   const allCategories = useSelector((state) => state.categories);
+  const tableId = useSelector((state) => state.table.tableId);
 
+//1
+const fetchImagesFunc = async () => {
+  const response = await axios(
+    `${import.meta.env.VITE_API_URL}/image/getAll`
+  )
+    .then((res) => res.data)
+    .then((data) => dispatch(setImages(data)))
+    .then(() => {
+      setFetchCategory(true);
+    });
+  return;
+};
+
+  //2
   const fetchCategoryFunc = async () => {
     const response = await axios(
       `${import.meta.env.VITE_API_URL}/category/getAllCategory`
@@ -54,24 +72,45 @@ const ScanQR = () => {
         dispatch(setCategories(tempCategories))
       })
       .then(() => {
+        setFetchTableName(true);
+      });
+    return;
+  };
+
+   //3
+   const fetchTableNameFunc = async () => {
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_URL}/tables/getTable/${scanResult}`
+    )
+      .then((res) => res.data)
+      .then((data)=>{
+       // console.log(data.name)
+        dispatch(setTableName(data.name))
+      })
+      .then(() => {
+        setFetchOrder(true);
+      });
+    return;
+  };
+
+//4
+  const fetchOrderFunc = async () => {
+    const response = await axios(
+      `${import.meta.env.VITE_API_URL}/order/getAllOrders`
+    )
+      .then((res) => res.data)
+      .then((data)=>{
+        dispatch(setOrder(data))
+      })
+      .then(() => {
         setFetchMenu(true);
       });
     return;
   };
 
 
-  const fetchImagesFunc = async () => {
-    const response = await axios(
-      `${import.meta.env.VITE_API_URL}/image/getAll`
-    )
-      .then((res) => res.data)
-      .then((data) => dispatch(setImages(data)))
-      .then(() => {
-        setFetchCategory(true);
-      });
-    return;
-  };
 
+  // FINAL FUNC
   const fetchMenuFunc = () => {
 /*
     const categoryList = [];
@@ -97,10 +136,23 @@ const ScanQR = () => {
   }, [fetchImages]);
 
   useEffect(() => {
+    if (fetchTableName != null) {
+      fetchTableNameFunc();
+    }
+  }, [fetchTableName]);
+
+
+  useEffect(() => {
     if (fetchMenu != null) {
       fetchMenuFunc();
     }
   }, [fetchMenu]);
+
+  useEffect(() => {
+    if (fetchOrder != null) {
+      fetchOrderFunc();
+    }
+  }, [fetchOrder]);
 
   useEffect(() => {
     if (fetchCategory != null) {
@@ -118,9 +170,9 @@ const ScanQR = () => {
     });
 
     const success = (result) => {
+      setScanResult("65140cfdb55ef7f67a7f7fff");
       setLoading(true);
       setFetchImages(true);
-      setScanResult(result);
       scanner.clear();
     };
 
@@ -175,17 +227,18 @@ const ScanQR = () => {
 
   let scanResultDiv;
   const skipToEnterName = () => {
+    setScanResult("65140cfdb55ef7f67a7f7fff");
     setLoading(true);
     setFetchImages(true);
-    setScanResult("DEMO_TABLE_ID");
   };
-  const skipToAdmin = () => {
 
+  const skipToAdmin = () => {
+    setScanResult("65140cfdb55ef7f67a7f7fff");
     setIsAdmin(true)
     setLoading(true);
     setFetchImages(true);
-    setScanResult("DEMO_TABLE_ID");
   };
+
   if (navigatePage) {
     dispatch(setTableId(scanResult));
 

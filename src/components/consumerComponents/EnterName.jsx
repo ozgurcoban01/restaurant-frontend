@@ -17,14 +17,14 @@ import {
   deepPurple,
 } from "@mui/material/colors";
 import { useDispatch, useSelector } from "react-redux";
-import { setConsumerNameRedux } from "../../redux/features/consumerSlice";
+import { setConsumerIdRedux, setConsumerNameRedux } from "../../redux/features/consumerSlice";
 
 const EnterName = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch()
   const tableId = useSelector((state) => state.tableId);
   const cat = useSelector((state) => state.categories.categories);
- console.log(cat)
+
   const [loading, setLoading] = useState(false);
   const [consumerName, setConsumerName] = useState("");
 
@@ -40,21 +40,22 @@ const EnterName = () => {
       const consumer = {
         name: consumerName,
       };
+
+      const goToMenu = (consumer) => {
+        dispatch(setConsumerNameRedux(consumer.name))
+        dispatch(setConsumerIdRedux(consumer._id))
+        navigate(`/consumer/menu/${consumer._id}`);
+      };
+
       const fetchData = async () => {
-        const consumerId = await axios
+        const consumerData = await axios
           .post(
             `${import.meta.env.VITE_API_URL}/consumer/createNewConsumer`,
             consumer
           )
-          .then((res) => res.data._id);
+          .then((res) => res.data).then((res)=>{setTimeout(goToMenu(res), 2000);});
 
-        const goToMenu = (id) => {
-          dispatch(setConsumerNameRedux(consumerName))
-          
-          navigate(`/consumer/menu/${id}`);
-        };
-
-        setTimeout(goToMenu(consumerId), 2000);
+        
       };
       fetchData();
     }

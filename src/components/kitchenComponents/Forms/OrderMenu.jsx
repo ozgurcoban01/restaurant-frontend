@@ -33,27 +33,16 @@ import LoadingButton from '@mui/lab/LoadingButton';
 
 
 const OrderMenu = () => {
-    const [orders,setOrders]=useState([])
+    const orders=useSelector((state)=>state.order.order)
     const [loading, setLoading] = React.useState(false);
 
     const handleClick= async () => {
         setLoading(true);
-        const response = await axios(
-            `${import.meta.env.VITE_API_URL}/order/getAllOrders`
-          )
-            .then((res) => res.data)
-            .then((data)=>{
-              
-              setOrders(data)
-              
-            }).then(()=>{
-                setTimeout(()=>{setLoading(false)},1000)
-            })
-           
-          return;
-
+     
+          setTimeout(()=>{setLoading(false)},1000)
     }
     useEffect(()=>{handleClick()},[])
+    console.log(orders)
   return (
     <>
      <LoadingButton
@@ -62,14 +51,13 @@ const OrderMenu = () => {
           onClick={handleClick}
           loading={loading}
           variant="contained"
-     
-        >
+        > 
           <span>sırala</span>
-        </LoadingButton>     {orders.map((order) => {
+        </LoadingButton>{orders.map((order) => {
                 if (true) {
                   return (
                     <OrderMenuCard
-                order={order}
+                      order={order}
                     />
                   );
                 }

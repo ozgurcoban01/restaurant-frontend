@@ -22,6 +22,7 @@ import NextPlanIcon from "@mui/icons-material/NextPlan";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
 import RedoIcon from "@mui/icons-material/Redo";
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import { setOrder } from "../../redux/features/orderSlice";
 const ScanQR = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -31,6 +32,8 @@ const ScanQR = () => {
   const [timeOut, setTimeOut] = useState();
   const [fetchMenu, setFetchMenu] = useState();
   const [fetchCategory, setFetchCategory] = useState();
+  const [fetchOrder, setFetchOrder] = useState();
+  const [fetchTableName,setFetchTableName] = useState();
   const [fetchImages, setFetchImages] = useState();
   const [navigatePage, setNavigatePage] = useState(false);
 
@@ -38,6 +41,7 @@ const ScanQR = () => {
   const allMenus = useSelector((state) => state.menu);
   const allCategories = useSelector((state) => state.categories);
 
+  //2
   const fetchCategoryFunc = async () => {
     const response = await axios(
       `${import.meta.env.VITE_API_URL}/category/getAllCategory`
@@ -45,11 +49,38 @@ const ScanQR = () => {
       .then((res) => res.data)
       .then((data) => dispatch(setCategories(data)))
       .then(() => {
+        setFetchOrder(true);
+      });
+    return;
+  };
+
+  //3
+  const fetchOrderFunc = async () => {
+    const response = await axios(
+      `${import.meta.env.VITE_API_URL}/order/getAllOrders`
+    )
+      .then((res) => res.data)
+      .then((data) => dispatch(setOrder(data)))
+      .then(() => {
         setFetchMenu(true);
       });
     return;
   };
 
+   //3
+   const fetchTableNameFunc = async () => {
+    const response = await axios(
+      `${import.meta.env.VITE_API_URL}/order/getAllOrders`
+    )
+      .then((res) => res.data)
+      .then((data) => dispatch(setOrder(data)))
+      .then(() => {
+        setFetchMenu(true);
+      });
+    return;
+  };
+
+//1
   const fetchImagesFunc = async () => {
     const response = await axios(
       `${import.meta.env.VITE_API_URL}/image/getAll`
@@ -87,6 +118,12 @@ const ScanQR = () => {
   }, [fetchImages]);
 
   useEffect(() => {
+    if (fetchTableName != null) {
+      fetchTableNameFunc();
+    }
+  }, [fetchTableName]);
+
+  useEffect(() => {
     if (fetchMenu != null) {
       fetchMenuFunc();
     }
@@ -97,6 +134,12 @@ const ScanQR = () => {
       fetchCategoryFunc();
     }
   }, [fetchCategory]);
+
+  useEffect(() => {
+    if (fetchOrder != null) {
+      fetchOrderFunc();
+    }
+  }, [fetchOrder]);
 
   useEffect(() => {
     const scanner = new Html5QrcodeScanner("reader", {
@@ -110,7 +153,7 @@ const ScanQR = () => {
     const success = (result) => {
       setLoading(true);
       setFetchImages(true);
-      setScanResult(result);
+      setScanResult("65134ac95670394540a77bbd");
       scanner.clear();
     };
 

@@ -52,8 +52,9 @@ const ConsumerDrawer = () => {
               <ListItemText primary="Tümü" />
             </ListItemButton>
           </ListItem>
+
           {categories.map((category,key)=>
-            <ListItem disablePadding>
+          <ListItem key={key} disablePadding>
             <ListItemButton
               selected={selectedIndex === key}
               onClick={(event) => handleListItemClick(event, key,category)}
@@ -65,6 +66,7 @@ const ConsumerDrawer = () => {
             </ListItemButton>
           </ListItem>
           )}
+
         </List>
       </Box>
     </Drawer>

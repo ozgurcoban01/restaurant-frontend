@@ -9,18 +9,20 @@ import categorySlice from '../features/categorySlice'
 import selCategorySlice from '../features/selCategorySlice'
 import cardSlice from '../features/cardSlice'
 import adminSelPage from '../features/adminSelPage'
+import orderSlice from '../features/orderSlice'
 
 export const store = configureStore({
   reducer: {
     counter:counterSlice,
     images:imagesSlice,
     menu:menuSlice,
-    tableId:tableSlice,
-    consumerName:consumerSlice,
+    table:tableSlice,
+    consumer:consumerSlice,
     drawer:drawerSlice,
     categories:categorySlice,
     selCategory:selCategorySlice,
     card:cardSlice,
-    adminPage:adminSelPage
+    adminPage:adminSelPage,
+    order:orderSlice,
   },
 }) 

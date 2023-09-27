@@ -52,7 +52,7 @@ const AdminPanel = () => {
     const [open, setOpen] = React.useState(false);
   const [sended, setSended] = React.useState(false);
   const drawerOpen = useSelector((state) => state.drawer);
-  const tableId = useSelector((state) => state.tableId.value);
+  const tableId = useSelector((state) => state.table.tableId);
   const dispatch = useDispatch();
   const theme = useTheme();
   const [cardAnchor, setCardAnchor] = useState(null);
@@ -60,7 +60,7 @@ const AdminPanel = () => {
   const cardCount = useSelector((state) => state.card.cardCount);
   const cardList = useSelector((state) => state.card.cardList);
   const cardPrice = useSelector((state) => state.card.cardPrice);
-  const consumerName = useSelector((state) => state.consumerName.value);
+  const consumerName = useSelector((state) => state.consumer.name);
   const {consumerId}=useParams()
 
   const setCardCloseFunc = () => {
