@@ -30,19 +30,47 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import OrderMenuCard from "./OrderMenuCard";
 import LoadingButton from '@mui/lab/LoadingButton';
+import { setOrder } from "../../../redux/features/orderSlice";
+import { setImages } from "../../../redux/features/imagesSlice";
 
 
 const OrderMenu = () => {
     const orders=useSelector((state)=>state.order.order)
     const [loading, setLoading] = React.useState(false);
+    const dispatch=useDispatch()
 
     const handleClick= async () => {
         setLoading(true);
-     
-          setTimeout(()=>{setLoading(false)},1000)
+
+        const fetchOrderFunc = async () => {
+
+          const response = await axios(
+            `${import.meta.env.VITE_API_URL}/order/getAllOrders`
+          )
+            .then((res) => res.data)
+            .then((data)=>{
+              dispatch(setOrder(data))
+            })
+            .then(() => {
+              setTimeout(()=>{setLoading(false)},1000)
+            });
+          return;
+        };
+
+          const response = await axios(
+            `${import.meta.env.VITE_API_URL}/image/getAll`
+          )
+            .then((res) => res.data)
+            .then((data) => dispatch(setImages(data)))
+            .then(() => {
+              fetchOrderFunc()
+            });
+          return;
+  
     }
-    useEffect(()=>{handleClick()},[])
-    console.log(orders)
+
+    //useEffect(()=>{handleClick()},[])
+    
   return (
     <>
      <LoadingButton
@@ -52,17 +80,18 @@ const OrderMenu = () => {
           loading={loading}
           variant="contained"
         > 
-          <span>sırala</span>
-        </LoadingButton>{orders.map((order) => {
-                if (true) {
-                  return (
-                    <OrderMenuCard
-                      order={order}
-                    />
-                  );
-                }
-                return null;
-              })}
+          <span>Siparişleri Getir</span>
+        </LoadingButton>
+        {orders.map((order) => {
+          if (true) {
+            return (
+              <OrderMenuCard
+                order={order}
+              />
+            );
+          }
+          return null;
+        })}
 
     </>
   )
