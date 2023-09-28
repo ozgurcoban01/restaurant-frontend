@@ -67,7 +67,7 @@ const MainMenus = () => {
             return <MenuAddForm/>
           case 'Kategori Ekle':
             return <CategoryAddForm/>
-            case 'Masa Ekle':
+            case 'Verilen Siparişler':
             return <OrderMenu/>
           default:
             return null
