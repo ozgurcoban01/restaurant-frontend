@@ -25,7 +25,7 @@ import CurrencyLiraIcon from "@mui/icons-material/CurrencyLira";
 
 const OrderMenuCard = ({ order }) => {
   const [menus, setMenus] = useState(order.menu);
-
+  console.log(order)
   return (
     <Box sx={{mt:2}}>
       <Card

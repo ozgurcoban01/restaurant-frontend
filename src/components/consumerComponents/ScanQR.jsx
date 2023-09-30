@@ -171,7 +171,7 @@ const fetchImagesFunc = async () => {
 
     const success = (result) => {
       console.log(result)
-      setScanResult("65140cfdb55ef7f67a7f7fff");
+      setScanResult(result);
       setLoading(true);
       setFetchImages(true);
       scanner.clear();
