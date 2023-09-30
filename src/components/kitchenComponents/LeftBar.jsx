@@ -27,7 +27,7 @@ const LeftBar = () => {
   const categories = cat.categories;
   const [selectedIndex, setSelectedIndex] = React.useState("Menü Ekle");
   const [allMenus,setAllMenus] = React.useState("all");
-  const menus=["Menü Ekle","Kategori Ekle","Verilen Siparişler"]
+  const menus=["Menü Ekle","Kategori Ekle","Verilen Siparişler","Masa Ekle"]
   const adminPage=useSelector((state)=>state.adminPage.page)
   const handleListItemClick = (event, index,menu) => {
     

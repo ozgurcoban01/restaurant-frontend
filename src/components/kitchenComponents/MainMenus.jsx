@@ -34,6 +34,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MenuAddForm from "./Forms/MenuAddForm";
 import CategoryAddForm from "./Forms/CategoryAddForm";
 import OrderMenu from "./Forms/OrderMenu";
+import QRGenerate from "./Forms/QRGenerate";
 
 const MainMenus = () => {
   const selCat = useSelector((state) => state.selCategory);
@@ -67,8 +68,10 @@ const MainMenus = () => {
             return <MenuAddForm/>
           case 'Kategori Ekle':
             return <CategoryAddForm/>
-            case 'Verilen Siparişler':
+          case 'Verilen Siparişler':
             return <OrderMenu/>
+          case 'Masa Ekle':
+            return <QRGenerate/>
           default:
             return null
         }
