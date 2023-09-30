@@ -13,7 +13,8 @@ const QRGenerate = () => {
     const [loading, setLoading] = useState(false);
     const [print,setPrint] = useState(false);
     const [consumerName, setConsumerName] = useState("");
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
+    const [qrId, setQrId] = useState(false);
     const componentRef = useRef();
     const setConsumerText = () => {
         const div = textRef.current;
@@ -64,7 +65,7 @@ const QRGenerate = () => {
         const result = await axios.post(
           `${import.meta.env.VITE_API_URL}/tables/createTable`,
           newTable
-        ).then(()=>{setLoading(false)}).then(()=>{setPrint(true),setOpen(true)});
+        ).then((data)=>{setQrId(data.data._id)}).then(()=>{setPrint(true),setLoading(false),setOpen(true)});
     
       };
 
@@ -98,19 +99,19 @@ const QRGenerate = () => {
                     > 
           <span>MASAYI EKLE</span>
         </LoadingButton>
-              <Box ref={componentRef} sx={{display:consumerName?"flex":"none",flexDirection:"column",backgroundColor:"transparent",mt:3,width:"100%",alignItems:"center",justifyContent:"center"}}>
+              <Box ref={componentRef} sx={{display:print?"flex":"none",flexDirection:"column",backgroundColor:"transparent",mt:3,width:"100%",alignItems:"center",justifyContent:"center"}}>
               <Box sx={{p:3,borderRadius:"20px",backgroundColor:"white"}}  >
               <QRCode
               
               size={256}
               style={{backgroundColor:"white"}}
-              value={consumerName}
+              value={qrId}
             
               />
               </Box>
        
               </Box>
-             <Box sx={{display:consumerName?"flex":"none",alignItems:"center",justifyContent:"center",width:"100%"}} >
+             <Box sx={{display:print?"flex":"none",alignItems:"center",justifyContent:"center",width:"100%"}} >
              <ReactToPrint
         trigger={() => <Button disabled={!print} sx={{mt:1}} variant="contained">YAZDIR</Button>}
         content={() => componentRef.current}
