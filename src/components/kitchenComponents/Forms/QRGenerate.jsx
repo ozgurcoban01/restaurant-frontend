@@ -6,6 +6,7 @@ import { LoadingButton } from '@mui/lab';
 import axios from 'axios'
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf'
+import ReactToPrint from 'react-to-print';
 
 const QRGenerate = () => {
 
@@ -13,7 +14,7 @@ const QRGenerate = () => {
     const [print,setPrint] = useState(false);
     const [consumerName, setConsumerName] = useState("");
     const [open, setOpen] = React.useState(false);
-
+    const componentRef = useRef();
     const setConsumerText = () => {
         const div = textRef.current;
         const innerText = div.children[1].children[0].value;
@@ -67,19 +68,10 @@ const QRGenerate = () => {
     
       };
 
-      const printFunc=()=>{
-        const capture=document.querySelector(".qrBox")
-        html2canvas(capture).then((canvas)=>{
-            const imgData = canvas.toDataURL('img/png');
-            const doc = new jsPDF();
-            const componentWidth = doc.internal.pageSize.getWidth();
-            const componentHeight = doc.internal.pageSize.getHeight();
-            doc.addImage(imgData, 'PNG', 0, 0, componentWidth-100, componentHeight-100);
-            doc.save('receipt.pdf');
-          })
-      }
+   
+
   return (
-    <div>
+    <div >
          <Typography sx={{pb:1}} variant="h5" color="primary" fontWeight="500">
           MASA ADI
         </Typography>
@@ -106,8 +98,8 @@ const QRGenerate = () => {
                     > 
           <span>MASAYI EKLE</span>
         </LoadingButton>
-              <Box  sx={{display:consumerName?"flex":"none",flexDirection:"column",backgroundColor:"transparent",mt:3,width:"100%",alignItems:"center",justifyContent:"center"}}>
-              <Box sx={{p:1,backgroundColor:"red"}} className="qrBox">
+              <Box ref={componentRef} sx={{display:consumerName?"flex":"none",flexDirection:"column",backgroundColor:"transparent",mt:3,width:"100%",alignItems:"center",justifyContent:"center"}}>
+              <Box sx={{p:3,borderRadius:"20px",backgroundColor:"white"}}  >
               <QRCode
               
               size={256}
@@ -116,9 +108,14 @@ const QRGenerate = () => {
             
               />
               </Box>
-    <Button onClick={printFunc} disabled={!print} sx={{mt:1}} variant="contained">YAZDIR</Button>
+       
               </Box>
-
+             <Box sx={{display:consumerName?"flex":"none",alignItems:"center",justifyContent:"center",width:"100%"}} >
+             <ReactToPrint
+        trigger={() => <Button disabled={!print} sx={{mt:1}} variant="contained">YAZDIR</Button>}
+        content={() => componentRef.current}
+      />
+             </Box>
               <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
   <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
     Masa Eklendi
