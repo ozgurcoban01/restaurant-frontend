@@ -50,8 +50,8 @@ function App() {
 
   return (
     <>
-        <ReactJoyride steps={steps} continuous={true}/>
-      <ThemeProvider theme={consumerTheme}>
+        <ReactJoyride steps={steps} locale={{ back: 'Geri  ', close: 'Kapat', last: 'SON', next: 'İleri', open: 'Aç', skip: 'Atla' }} continuous={true}/>
+      <ThemeProvider theme={consumerTheme}> 
         <Routes>
           <Route path="consumer" >
             <Route path="scanQR" element={<ScanQR />} />
