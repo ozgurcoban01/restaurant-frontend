@@ -23,7 +23,13 @@ import SkipNextIcon from "@mui/icons-material/SkipNext";
 import RedoIcon from "@mui/icons-material/Redo";
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import { setOrder } from "../../redux/features/orderSlice";
+import ReactJoyride from "react-joyride";
+
+
+
 const ScanQR = () => {
+
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -261,7 +267,7 @@ const fetchImagesFunc = async () => {
           flexDirection: "column",
         }}
       >
-        <div id="reader"></div>{" "}
+        <div id="reader" className="scan-qr"></div>{" "}
         <Button
           onClick={skipToEnterName}
           endIcon={<RedoIcon />}
@@ -269,6 +275,7 @@ const fetchImagesFunc = async () => {
           size="small"
           color="error"
           sx={{mt:1}}
+          className="skip-qr"
         >
           QR Taramayı Atla
         </Button>
@@ -279,6 +286,7 @@ const fetchImagesFunc = async () => {
           size="small"
           color="warning"
           sx={{mt:1}}
+          className="admin-panel"
         >
           Admin Girişi
         </Button>
@@ -287,8 +295,9 @@ const fetchImagesFunc = async () => {
   }
 
   return (
-    <div>
-      <Box sx={{ backgroundColor: deepPurple[100] }}>
+    <div >
+
+      <Box  sx={{ backgroundColor: deepPurple[100] }}>
         <Container
           sx={{
             display: "flex",
@@ -296,7 +305,7 @@ const fetchImagesFunc = async () => {
             alignItems: "center",
             justifyContent: "center",
             flexDirection: "column",
-          }}
+             }}
         >
           {loading ? <CircularProgress /> : scanResultDiv}
         </Container>

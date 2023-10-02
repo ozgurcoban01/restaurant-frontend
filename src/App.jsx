@@ -17,9 +17,28 @@ import ConsumerMenuK from "./components/kitchenComponents/ConsumerMenu";
 import ConsumerDrawer from "./components/consumerComponents/ConsumerDrawer";
 import ConsumerMenu from "./components/consumerComponents/ConsumerMenu";
 import AdminPanel from "./components/kitchenComponents/AdminPanel";
+import ReactJoyride from "react-joyride";
+import "./components/init"
 
 function App() {
-  
+  const steps=[
+    {
+      target:'.scan-qr',
+      disableBeacon: true,
+      content:'Bu alandan QR Kodu tarayıp müşteri olarak giriş yapabilirsiniz'
+    },
+    {
+      target:'.skip-qr',
+      
+      content:'Bu alandan ise QR Kod Taramadan giriş yapabilirsiniz'
+    },
+    {
+      target:'.admin-panel',
+      
+      content:'Dilerseniz doğrudan admin paneline geçebilirisiniz'
+    }
+  ]
+
   const counter = useSelector((state) => state.counter.value);
   const menu = useSelector((state) => state.menu.menu);
 
@@ -31,6 +50,7 @@ function App() {
 
   return (
     <>
+        <ReactJoyride steps={steps} continuous={true}/>
       <ThemeProvider theme={consumerTheme}>
         <Routes>
           <Route path="consumer" >
