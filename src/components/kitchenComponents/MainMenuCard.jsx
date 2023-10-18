@@ -63,14 +63,14 @@ const MainMenuCard = ({menu,title,price,category,image_id,menu_id}) => {
   }
 
   return (
-    <Card sx={{maxWidth:"200px",width:"100%",m:1,minHeight:"300px",borderRadius:5,backgroundColor:purple[100],mb:3}}>
+    <Card sx={{maxWidth:"200px",width:"100%",m:1,minHeight:"300px",borderRadius:5,backgroundColor:"primary.light",mb:3}}>
         <CardMedia
           sx={{ height: 140 }}
           image={`data:image/png;base64,${imgSrc}`}
           title="green iguana"
         />
         <CardContent>
-          <Typography sx={{color:purple[900],fontFamily:"roboto",fontWeight:"800",fontSize:"xl-larger"}} gutterBottom variant="h5" component="div">
+          <Typography sx={{color:"primary.dark",fontFamily:"roboto",fontWeight:"800",fontSize:"xl-larger"}} gutterBottom variant="h5" component="div">
           {title}
           </Typography>
           <Typography sx={{color:"black",fontFamily:"roboto",fontWeight:"100",fontSize:"xl-larger"}} variant="body2" color="white">

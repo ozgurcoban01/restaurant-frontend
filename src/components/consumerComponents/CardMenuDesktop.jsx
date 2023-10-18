@@ -83,7 +83,7 @@ const CardMenuDesktop = ({menu}) => {
         alignItems:"center",
         margin: 2,
         padding: 1,
-        backgroundColor: purple[900],
+        backgroundColor: "primary.dark",
         borderRadius:5,
         pl:3
       }}

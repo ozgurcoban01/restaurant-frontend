@@ -37,7 +37,7 @@ const ConsumerDrawer = () => {
 
       }}
     >
-      <Box sx={{ width: "100%",height:"100%", backgroundColor: purple[900],color:"white" }}>
+      <Box sx={{ width: "100%",height:"100%", backgroundColor: "primary.dark",color:"white" }}>
         <List component="nav" aria-label="secondary mailbox folder">
         <ListItem disablePadding>
             <ListItemButton

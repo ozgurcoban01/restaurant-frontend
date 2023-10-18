@@ -118,7 +118,7 @@ const ConsumerMenu = () => {
         sx={{
           miNWidth: "100vw",
           minHeight: "100vh",
-          backgroundColor: purple[100],
+          backgroundColor: "primary.light",
         }}
       >
         <AppBar position="static">
@@ -203,7 +203,7 @@ const ConsumerMenu = () => {
         {sended?<Box sx={{width:"70%",height:"50%",borderRadius:10,backgroundColor:"green",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-evenly"}}>
         <VerifiedIcon sx={{width:"40%",height:"40%"}}/>
         <Typography sx={{fontFamily:"roboto",fontSize:"large",fontWeight:"900"}}>Siparişiniz Hazırlanıyor :)</Typography>
-        </Box>:<CircularProgress sx={{color:purple[100]}}/>}
+        </Box>:<CircularProgress sx={{color:"primary.light"}}/>}
       </Backdrop>
       </Box>
     </>

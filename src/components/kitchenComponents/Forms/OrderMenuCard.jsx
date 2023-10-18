@@ -34,7 +34,7 @@ const OrderMenuCard = ({ order }) => {
           p: 3,
           minHeight: "100%",
           borderRadius: 5,
-          backgroundColor: purple[900],
+          backgroundColor: "primary.dark",
           paddingBottom: 0,
           mb: 2,
           mt: 1,
@@ -45,7 +45,7 @@ const OrderMenuCard = ({ order }) => {
         <CardContent sx={{ borderRadius: "10px", wordWrap: "break-word" }}>
           <Typography
             sx={{
-              color: purple[100],
+              color: "primary.light",
               fontFamily: "roboto",
               fontWeight: "800",
               fontSize: "xx-large",
@@ -132,7 +132,7 @@ const OrderMenuCard = ({ order }) => {
 
         <Typography
           sx={{
-            color: purple[100],
+            color: "primary.light",
             fontFamily: "roboto",
             fontWeight: "800",
             fontSize: "xx-large",
@@ -183,7 +183,7 @@ const OrderMenuCard = ({ order }) => {
                   m: 1,
                   height: "",
                   borderRadius: 5,
-                  backgroundColor: purple[100],
+                  backgroundColor:"primary.light",
                   mb: 3,
                   
                 }}
@@ -196,7 +196,7 @@ const OrderMenuCard = ({ order }) => {
                 <CardContent sx={{p:1,pl:2}}>
                   <Typography
                     sx={{
-                      color: purple[900],
+                      color: "primary.dark",
                       fontFamily: "roboto",
                       fontWeight: "800",
                       fontSize: "xx-large",
@@ -217,7 +217,7 @@ const OrderMenuCard = ({ order }) => {
                     variant="body2"
                     color="white"
                   >
-                    <span style={{color:purple[900],fontWeight:"900",fontSize:"medium"}}>TUTAR: </span><span style={{padding:"7px",backgroundColor:"green",borderRadius:"10px",color:"white",fontWeight:"500"}}>{menu.price}TL</span>
+                    <span style={{color:"primary.dark",fontWeight:"900",fontSize:"medium"}}>TUTAR: </span><span style={{padding:"7px",backgroundColor:"green",borderRadius:"10px",color:"white",fontWeight:"500"}}>{menu.price}TL</span>
                   </Typography>
                 </CardContent>
               </Card>

@@ -113,7 +113,7 @@ const AdminPanel = () => {
       sx={{
         miNWidth: "100vw",
         minHeight: "100vh",
-        backgroundColor: purple[100],
+        backgroundColor: "primary.light",
       }}
     >
       <AppBar position="static">

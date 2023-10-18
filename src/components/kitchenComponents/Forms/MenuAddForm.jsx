@@ -204,7 +204,6 @@ const MenuAddForm = () => {
           renderInput={(params) => <TextField {...params} label="Movie" />}
           onChange={handleCategory}
        />
-
         <Typography variant="h4" color="primary" fontWeight="500">
           RESİM
         </Typography>

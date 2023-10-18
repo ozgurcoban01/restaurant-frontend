@@ -10,6 +10,7 @@ import selCategorySlice from '../features/selCategorySlice'
 import cardSlice from '../features/cardSlice'
 import adminSelPage from '../features/adminSelPage'
 import orderSlice from '../features/orderSlice'
+import colorSlice from '../features/colorSlice'
 
 export const store = configureStore({
   reducer: {
@@ -24,5 +25,6 @@ export const store = configureStore({
     card:cardSlice,
     adminPage:adminSelPage,
     order:orderSlice,
+    themeColor:colorSlice,
   },
 }) 

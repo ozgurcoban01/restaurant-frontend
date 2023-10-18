@@ -19,6 +19,8 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { setConsumerIdRedux, setConsumerNameRedux } from "../../redux/features/consumerSlice";
 
+
+
 const EnterName = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch()
@@ -85,67 +87,73 @@ const EnterName = () => {
     setConsumerName(innerText);
   };
 
+
   
   return (
+
+ 
+
     <Box
+    sx={{
+      backgroundColor: "primary.dark",
+      marignTop: 0,
+      marginBottom: 0,
+      width: "100vw",
+      height: "100vh",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    }}
+  >
+    <Container
+      disableGutters
+      fixed
       sx={{
-        backgroundColor: deepPurple[100],
         marignTop: 0,
         marginBottom: 0,
-        width: "100vw",
         height: "100vh",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
       }}
     >
-      <Container
-        disableGutters
-        fixed
-        sx={{
-          marignTop: 0,
-          marginBottom: 0,
-          height: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Box sx={{ p: 3 }}>
-          <form>
-            <Stack
-              direction="column"
-              spacing={2}
-              divider={<Divider orientation="horizontal" flexItem />}
-            >
-              <TextField
-                onChange={setConsumerText}
-                required
-                ref={textRef}
-                onBlur={checkText}
-                onFocus={setTextCheck}
-                id="outlined-basic"
-                label="Enter Name"
-                variant="outlined"
-                error={textError}
-              />
+      <Box sx={{ p: 3 }}>
+        <form>
+          <Stack
+            direction="column"
+            spacing={2}
+            divider={<Divider orientation="horizontal" flexItem />}
+          >
+            <TextField
+              onChange={setConsumerText}
+              required
+              ref={textRef}
+              onBlur={checkText}
+              onFocus={setTextCheck}
+              id="outlined-basic"
+              label="Enter Name"
+              variant="outlined"
+              error={textError}
 
-              <LoadingButton
-                type="submit"
-                size="small"
-                onClick={handleClick}
-                loading={loading}
-                loadingPosition="start"
-                startIcon={<SendRoundedIcon />}
-                variant="contained"
-              >
-                <span>Giriş Yap</span>
-              </LoadingButton>
-            </Stack>
-          </form>
-        </Box>
-      </Container>
-    </Box>
+            />
+
+            <LoadingButton
+              type="submit"
+              size="small"
+              onClick={handleClick}
+              loading={loading}
+              loadingPosition="start"
+              startIcon={<SendRoundedIcon />}
+              variant="contained"
+              
+            >
+              <span>Giriş Yap</span>
+            </LoadingButton>
+          </Stack>
+        </form>
+      </Box>
+    </Container>
+  </Box>
   );
 };
 

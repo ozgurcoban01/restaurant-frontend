@@ -24,8 +24,8 @@ import RedoIcon from "@mui/icons-material/Redo";
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import { setOrder } from "../../redux/features/orderSlice";
 import ReactJoyride from "react-joyride";
-
-
+import { createTheme,ThemeProvider } from "@mui/material";
+import { CssBaseline } from '@mui/material/';
 
 const ScanQR = () => {
 
@@ -265,6 +265,7 @@ const fetchImagesFunc = async () => {
           alignItems: "center",
           justifyContent: "center",
           flexDirection: "column",
+
         }}
       >
         <div id="reader" className="scan-qr"></div>{" "}
@@ -297,9 +298,10 @@ const fetchImagesFunc = async () => {
   return (
     <div >
 
-      <Box  sx={{ backgroundColor: deepPurple[100] }}>
+      <Box  sx={{ backgroundColor:deepPurple[100], color:"red"}}>
         <Container
           sx={{
+           
             display: "flex",
             height: "100vh",
             alignItems: "center",
@@ -307,7 +309,7 @@ const fetchImagesFunc = async () => {
             flexDirection: "column",
              }}
         >
-          {loading ? <CircularProgress /> : scanResultDiv}
+          {loading ? <CircularProgress sx={{color:deepPurple[900]}}/> : scanResultDiv}
         </Container>
       </Box>
     </div>

@@ -80,7 +80,7 @@ const CardMenu = ({menu}) => {
         alignItems:"center",
         margin: 2,
         padding: 1,
-        backgroundColor: purple[100],
+        backgroundColor: "primary.light",
       }}
     >
       <CardMedia

@@ -87,7 +87,7 @@ const EnterName = () => {
   return (
     <Box
       sx={{
-        backgroundColor: deepPurple[100],
+        backgroundColor: "primary.light",
         marignTop: 0,
         marginBottom: 0,
         width: "100vw",

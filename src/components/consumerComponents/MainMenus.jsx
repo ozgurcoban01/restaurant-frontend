@@ -63,7 +63,7 @@ const MainMenus = () => {
           return (
             <Accordion
               defaultExpanded={true}
-              sx={{ p: 1, backgroundColor: purple[900] }}
+              sx={{ p: 1, backgroundColor: "primary.dark"}}
             >
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}

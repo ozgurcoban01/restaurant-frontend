@@ -78,7 +78,7 @@ const RightBar = ({ cardListProp }) => {
           sx={{
             p: 5,
             pb: 0,
-            color: purple[900],
+            color: "primary.dark",
             fontFamily: "roboto",
             fontSize: "xx-large",
             fontWeight: "900",
@@ -111,7 +111,7 @@ const RightBar = ({ cardListProp }) => {
         {cardCount ? (
           <Box
             sx={{
-              backgroundColor: purple[900],
+              backgroundColor: "primary.dark",
               borderRadius: 100,
 
               display: "flex",
@@ -144,7 +144,7 @@ const RightBar = ({ cardListProp }) => {
         {sended?<Box sx={{width:"30%",height:"30%",borderRadius:10,backgroundColor:"green",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-evenly"}}>
         <VerifiedIcon sx={{width:"40%",height:"40%"}}/>
         <Typography sx={{fontFamily:"roboto",fontSize:"large",fontWeight:"900"}}>Siparişiniz Hazırlanıyor :)</Typography>
-        </Box>:<CircularProgress sx={{color:purple[100]}}/>}
+        </Box>:<CircularProgress sx={{color:"primary.light"}}/>}
       </Backdrop>
     </Box>
   );
