@@ -26,6 +26,7 @@ import { setOrder } from "../../redux/features/orderSlice";
 import ReactJoyride from "react-joyride";
 import { createTheme,ThemeProvider } from "@mui/material";
 import { CssBaseline } from '@mui/material/';
+import LinearProgress from '@mui/material/LinearProgress';
 
 const ScanQR = () => {
 
@@ -33,12 +34,16 @@ const ScanQR = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [netError, setNetError] = useState(false);
   const [scanResult, setScanResult] = useState(null);
+  const [progress, setProgress] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [apiurl, setApiurl] = useState(import.meta.env.VITE_API_URL);
   const [timeOut, setTimeOut] = useState();
   const [fetchMenu, setFetchMenu] = useState();
   const [fetchImages, setFetchImages] = useState();
   const [fetchCategory, setFetchCategory] = useState();
+  const [newapiurl, setNewApiUrl] = useState();
   const [fetchTableName, setFetchTableName] = useState();
   const [fetchOrder, setFetchOrder] = useState();
   const [navigatePage, setNavigatePage] = useState(false);
@@ -52,12 +57,18 @@ const ScanQR = () => {
 //1
 const fetchImagesFunc = async () => {
   const response = await axios(
-    `${import.meta.env.VITE_API_URL}/image/getAll`
+    `${apiurl}/image/getAll`
   )
     .then((res) => res.data)
     .then((data) => dispatch(setImages(data)))
     .then(() => {
       setFetchCategory(true);
+      setProgress(20)
+    }).catch((error)=>{
+      console.log("hata")
+      console.log(apiurl)
+      setNetError(true)
+      setLoading(false)
     });
   return;
 };
@@ -65,7 +76,7 @@ const fetchImagesFunc = async () => {
   //2
   const fetchCategoryFunc = async () => {
     const response = await axios(
-      `${import.meta.env.VITE_API_URL}/category/getAllCategory`
+      `${apiurl}/category/getAllCategory`
     )
       .then((res) => res.data)
       .then((data)=>{
@@ -79,6 +90,7 @@ const fetchImagesFunc = async () => {
       })
       .then(() => {
         setFetchTableName(true);
+        setProgress(40)
       });
     return;
   };
@@ -86,7 +98,7 @@ const fetchImagesFunc = async () => {
    //3
    const fetchTableNameFunc = async () => {
     const response = await axios.post(
-      `${import.meta.env.VITE_API_URL}/tables/getTable/${scanResult}`
+      `${apiurl}/tables/getTable/${scanResult}`
     )
       .then((res) => res.data)
       .then((data)=>{
@@ -95,6 +107,7 @@ const fetchImagesFunc = async () => {
       })
       .then(() => {
         setFetchOrder(true);
+        setProgress(60)
       });
     return;
   };
@@ -102,7 +115,7 @@ const fetchImagesFunc = async () => {
 //4
   const fetchOrderFunc = async () => {
     const response = await axios(
-      `${import.meta.env.VITE_API_URL}/order/getAllOrders`
+      `${apiurl}/order/getAllOrders`
     )
       .then((res) => res.data)
       .then((data)=>{
@@ -110,6 +123,7 @@ const fetchImagesFunc = async () => {
       })
       .then(() => {
         setFetchMenu(true);
+        setProgress(80)
       });
     return;
   };
@@ -118,6 +132,7 @@ const fetchImagesFunc = async () => {
 
   // FINAL FUNC
   const fetchMenuFunc = () => {
+    setProgress(100)
 /*
     const categoryList = [];
 
@@ -140,6 +155,11 @@ const fetchImagesFunc = async () => {
       fetchImagesFunc();
     }
   }, [fetchImages]);
+  useEffect(() => {
+    if (newapiurl != null&&newapiurl==true) {
+      fetchImagesFunc()
+    }
+  }, [newapiurl]);
 
   useEffect(() => {
     if (fetchTableName != null) {
@@ -233,10 +253,18 @@ const fetchImagesFunc = async () => {
   }, []);
 
   let scanResultDiv;
+
   const skipToEnterName = () => {
     setScanResult("65140cfdb55ef7f67a7f7fff");
     setLoading(true);
     setFetchImages(true);
+  };
+
+  const changeApiUrl = () => {
+    setApiurl(import.meta.env.VITE_API_URL2)
+    setNetError(false)
+    setLoading(true)
+    setNewApiUrl(true)
   };
 
   const skipToAdmin = () => {
@@ -295,10 +323,22 @@ const fetchImagesFunc = async () => {
     );
   }
 
+  const loadingPage = (
+    <Box sx={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
+    <CircularProgress sx={{m:1,color:deepPurple[900]}}/>
+    
+
+    <LinearProgress sx={{m:1,maxWidth:"200px",width:"80vw",fill:deepPurple[900]}} variant="determinate" value={progress} />
+    <Box sx={{color:deepPurple[900],fontWeight:900,m:1}}>    BİRAZ VAKİT ALABİLİR, BU EKRANA GELDİYSENİZ VE ÇOK UZUN SÜRDÜYSE SAYFAYI YENİLEYEBİLİRSİNİZ
+ 
+          
+          </Box>   
+    </Box>
+  );
+
   return (
     <div >
-
-      <Box  sx={{ backgroundColor:deepPurple[100], color:"red"}}>
+{netError ? <Box  sx={{ backgroundColor:deepPurple[100], color:"red"}}>
         <Container
           sx={{
            
@@ -309,9 +349,36 @@ const fetchImagesFunc = async () => {
             flexDirection: "column",
              }}
         >
-          {loading ? <CircularProgress sx={{color:deepPurple[900]}}/> : scanResultDiv}
+          <Box sx={{color:deepPurple[900],fontWeight:900}}>ŞU ANDA KULLANDIĞIM SERVİS ÇALIŞMIYOR, DİĞER SERVİSİ KULLANMAK İÇİN TIKLAYIN 
+          
+          </Box>    
+          <Button
+          onClick={changeApiUrl}
+          endIcon={<SkipNextIcon />}
+          variant="contained"
+          size="small"
+          color="primary"
+          sx={{mt:1}}
+          className="admin-panel"
+        >
+          BAĞLANTIYI DEĞİŞTİR
+        </Button>
         </Container>
-      </Box>
+      </Box> : <Box  sx={{ backgroundColor:deepPurple[100], color:"red"}}>
+        <Container
+          sx={{
+           
+            display: "flex",
+            height: "100vh",
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "column",
+             }}
+        >
+          {loading ? loadingPage : scanResultDiv}       
+        </Container>
+      </Box>}  
+      
     </div>
   );
 };
