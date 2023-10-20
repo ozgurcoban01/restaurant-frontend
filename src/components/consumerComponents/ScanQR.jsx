@@ -54,16 +54,24 @@ const ScanQR = () => {
   const allCategories = useSelector((state) => state.categories);
   const tableId = useSelector((state) => state.table.tableId);
 
+  const options={
+    responseType:'blob',
+    onDownloadProgress:function(progressEvent){
+      setProgress(progressEvent*70)
+      console.log(progressEvent)
+    }
+  }
+
 //1
 const fetchImagesFunc = async () => {
-  const response = await axios(
-    `${apiurl}/image/getAll`
+  const response = await axios.get(
+    `${apiurl}/image/getAll`,options
   )
     .then((res) => res.data)
     .then((data) => dispatch(setImages(data)))
     .then(() => {
       setFetchCategory(true);
-      setProgress(20)
+      setProgress(70)
     }).catch((error)=>{
       console.log("hata")
       console.log(apiurl)
@@ -90,7 +98,7 @@ const fetchImagesFunc = async () => {
       })
       .then(() => {
         setFetchTableName(true);
-        setProgress(40)
+        setProgress(75)
       });
     return;
   };
@@ -107,7 +115,7 @@ const fetchImagesFunc = async () => {
       })
       .then(() => {
         setFetchOrder(true);
-        setProgress(60)
+        setProgress(80)
       });
     return;
   };
@@ -123,7 +131,7 @@ const fetchImagesFunc = async () => {
       })
       .then(() => {
         setFetchMenu(true);
-        setProgress(80)
+        setProgress(90)
       });
     return;
   };
@@ -147,7 +155,7 @@ const fetchImagesFunc = async () => {
     setTimeout(() => {
       setLoading(false);
       setNavigatePage(true);
-    }, 2000);
+    }, 500);
   };
 
   useEffect(() => {
