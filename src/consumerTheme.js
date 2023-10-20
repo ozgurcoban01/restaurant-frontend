@@ -7,12 +7,12 @@ export const consumerTheme= createTheme({
     palette: {
       primary: {
         main: green[500],
-        light: green[200],
+        light: green[100],
         dark: green[900],
       },
       secondary: {
         main: red[500],
-        light: red[200],
+        light: red[100],
         dark: red[900],
       },
     },

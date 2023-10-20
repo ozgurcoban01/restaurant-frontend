@@ -117,7 +117,7 @@ const ConsumerMenu = () => {
           backgroundColor: "primary.light",
         }}
       >
-        <AppBar position="static">
+        <AppBar sx={{backgroundColor:"primary.dark"}} position="static">
           <Container maxWidth="xl">
             <Toolbar
               sx={{

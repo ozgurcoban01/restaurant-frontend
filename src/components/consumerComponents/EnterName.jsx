@@ -18,6 +18,7 @@ import {
 } from "@mui/material/colors";
 import { useDispatch, useSelector } from "react-redux";
 import { setConsumerIdRedux, setConsumerNameRedux } from "../../redux/features/consumerSlice";
+import { setPassScanQr } from "../../redux/features/passScanQrSlice";
 
 
 
@@ -47,6 +48,7 @@ const EnterName = () => {
         dispatch(setConsumerNameRedux(consumer.name))
         dispatch(setConsumerIdRedux(consumer._id))
         navigate(`/consumer/menu/${consumer._id}`);
+        dispatch(setPassScanQr(true))
       };
 
       const fetchData = async () => {

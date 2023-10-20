@@ -11,6 +11,7 @@ import cardSlice from '../features/cardSlice'
 import adminSelPage from '../features/adminSelPage'
 import orderSlice from '../features/orderSlice'
 import colorSlice from '../features/colorSlice'
+import passScanQrSlice from '../features/passScanQrSlice'
 
 export const store = configureStore({
   reducer: {
@@ -26,5 +27,6 @@ export const store = configureStore({
     adminPage:adminSelPage,
     order:orderSlice,
     themeColor:colorSlice,
+    passScanQr:passScanQrSlice,
   },
 }) 

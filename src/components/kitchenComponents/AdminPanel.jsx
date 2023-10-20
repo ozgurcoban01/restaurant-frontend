@@ -47,6 +47,7 @@ import {
   import PaymentOutlinedIcon from "@mui/icons-material/PaymentOutlined";
   import { useParams } from "react-router";
   import VerifiedIcon from '@mui/icons-material/Verified';
+import { setPassScanQr } from "../../redux/features/passScanQrSlice";
 
 const AdminPanel = () => {
     const [open, setOpen] = React.useState(false);
@@ -81,6 +82,9 @@ const AdminPanel = () => {
     dispatch(setCardPrice(cardPrice.toFixed(2)));
     dispatch(setCardCount(cardList.length));
   }, [cardList]);
+    useEffect(()=>{
+      dispatch(setPassScanQr(true))
+    },[])
 
   const setOrder= async()=>{
     setOpen(true);
@@ -116,7 +120,7 @@ const AdminPanel = () => {
         backgroundColor: "primary.light",
       }}
     >
-      <AppBar position="static">
+      <AppBar sx={{backgroundColor:"primary.dark"}} position="static">
         <Container maxWidth="xl">
           <Toolbar
             sx={{

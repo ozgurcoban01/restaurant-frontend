@@ -29,7 +29,7 @@ import FileCopyIcon from '@mui/icons-material/FileCopyOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import PrintIcon from '@mui/icons-material/Print';
 import ShareIcon from '@mui/icons-material/Share';
-import { lime, purple,red,green,orange,deepOrange,deepPurple } from '@mui/material/colors';
+import { lime, purple,red,green,orange,deepOrange,deepPurple,lightBlue,brown } from '@mui/material/colors';
 import { setThemeColor } from "./redux/features/colorSlice";
 
 
@@ -38,20 +38,25 @@ import ColorLensIcon from '@mui/icons-material/ColorLens';
 
 
 function App() {
+
+
+  const themMain=500
+  const themLight=50
+  const themDark=900
  
-  
+  const passScanQr=useSelector((state)=>state.passScanQr.value)
   const dispatch=useDispatch()
   const redTheme= createTheme({
     palette: {
       primary: {
-        main: red[500],
-        light: red[200],
-        dark: red[900],
+        main: red[themMain],
+        light: red[themLight],
+        dark: red[themDark],
       },
       secondary: {
-        main: red[500],
-        light: red[200],
-        dark: red[900],
+        main: red[themMain],
+        light: red[themLight],
+        dark: red[themDark],
       },
     },
     components: {
@@ -69,14 +74,14 @@ function App() {
   const purpleTheme= createTheme({
     palette: {
       primary: {
-        main: deepPurple[500],
-        light: deepPurple[200],
-        dark: deepPurple[900],
+        main: deepPurple[themMain],
+        light: deepPurple[themLight],
+        dark: deepPurple[themDark],
       },
       secondary: {
-        main: red[500],
-        light: red[200],
-        dark: red[900],
+        main: red[themMain],
+        light: red[themLight],
+        dark: red[themDark],
       },
     },
     components: {
@@ -94,14 +99,14 @@ function App() {
   const orangeTheme= createTheme({
     palette: {
       primary: {
-        main: orange[500],
-        light: orange[200],
-        dark: orange[900],
+        main: orange[themMain],
+        light: orange[themLight],
+        dark: orange[themDark],
       },
       secondary: {
-        main: red[500],
-        light: red[200],
-        dark: red[900],
+        main: red[themMain],
+        light: red[themLight],
+        dark: red[themDark],
       },
     },
     components: {
@@ -119,14 +124,14 @@ function App() {
   const greenTheme= createTheme({
     palette: {
       primary: {
-        main: green[500],
-        light: green[200],
-        dark: green[900],
+        main: green[themMain],
+        light: green[themLight],
+        dark: green[themDark],
       },
       secondary: {
-        main: red[500],
-        light: red[200],
-        dark: red[900],
+        main: red[themMain],
+        light: red[themLight],
+        dark: red[themDark],
       },
     },
     components: {
@@ -134,6 +139,56 @@ function App() {
         styleOverrides: {
           root: {
             backgroundColor: green,
+     
+          },
+        },
+      },
+    },
+    
+  });
+  const lightBlueTheme= createTheme({
+    palette: {
+      primary: {
+        main: lightBlue[themMain],
+        light: lightBlue[themLight],
+        dark: lightBlue[themDark],
+      },
+      secondary: {
+        main: red[themMain],
+        light: red[themLight],
+        dark: red[themDark],
+      },
+    },
+    components: {
+      MuiList: {
+        styleOverrides: {
+          root: {
+            backgroundColor: lightBlue,
+     
+          },
+        },
+      },
+    },
+    
+  });
+  const brownTheme= createTheme({
+    palette: {
+      primary: {
+        main: brown[themMain],
+        light: brown[themLight],
+        dark: brown[themDark],
+      },
+      secondary: {
+        main: red[themMain],
+        light: red[themLight],
+        dark: red[themDark],
+      },
+    },
+    components: {
+      MuiList: {
+        styleOverrides: {
+          root: {
+            backgroundColor: brown,
      
           },
         },
@@ -171,6 +226,8 @@ function App() {
     { icon: <FormatColorFillIcon sx={{fill:"red"}}/>,  theme:redTheme },
     { icon: <FormatColorFillIcon sx={{fill:"green"}}/>,  theme:greenTheme  },
     { icon: <FormatColorFillIcon sx={{fill:"orange"}}/>,  theme:orangeTheme  },
+    { icon: <FormatColorFillIcon sx={{fill:"lightBlue"}}/>,  theme:lightBlueTheme  },
+    { icon: <FormatColorFillIcon sx={{fill:"brown"}}/>,  theme:brownTheme  },
   ];
   useEffect(() => {
     dispatch(fetchMenu());
@@ -208,8 +265,9 @@ const setColor=(e)=>{
         
 
         <SpeedDial
+        
         ariaLabel="SpeedDial basic example"
-        sx={{ position: 'absolute', bottom: 16, right: 16 }}
+        sx={{ position:'absolute',bottom:16,right:16,display:(passScanQr?"flex":"none")}}
         icon={<ColorLensIcon  />}
       >
         {actions.map((action) => (

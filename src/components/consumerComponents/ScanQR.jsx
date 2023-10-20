@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Html5QrcodeScanner } from "html5-qrcode";
-import { Box, Button, Container, fabClasses } from "@mui/material";
+import { Box, Button, Container, Typography, fabClasses } from "@mui/material";
 import {
   lime,
   purple,
@@ -27,6 +27,8 @@ import ReactJoyride from "react-joyride";
 import { createTheme,ThemeProvider } from "@mui/material";
 import { CssBaseline } from '@mui/material/';
 import LinearProgress from '@mui/material/LinearProgress';
+import { setPassScanQr } from "../../redux/features/passScanQrSlice";
+import CircularWithValueLabel from "./CircularWithValueLabel";
 
 const ScanQR = () => {
 
@@ -37,6 +39,7 @@ const ScanQR = () => {
   const [netError, setNetError] = useState(false);
   const [scanResult, setScanResult] = useState(null);
   const [progress, setProgress] = useState(0);
+  const [progressBuffer, setProgressBuffer] = useState(0);
   const [loading, setLoading] = useState(false);
   const [apiurl, setApiurl] = useState(import.meta.env.VITE_API_URL);
   const [timeOut, setTimeOut] = useState();
@@ -55,16 +58,19 @@ const ScanQR = () => {
   const tableId = useSelector((state) => state.table.tableId);
 
   const options={
-    responseType:'blob',
     onDownloadProgress:function(progressEvent){
-      setProgress(progressEvent*70)
-      console.log(progressEvent)
+
+      if(progressEvent!=NaN){
+        setProgress(progressEvent.progress*70)
+      }
+
     }
   }
 
 //1
 const fetchImagesFunc = async () => {
-  const response = await axios.get(
+  setProgressBuffer(10)
+  const response = await axios(
     `${apiurl}/image/getAll`,options
   )
     .then((res) => res.data)
@@ -72,6 +78,7 @@ const fetchImagesFunc = async () => {
     .then(() => {
       setFetchCategory(true);
       setProgress(70)
+      setProgressBuffer(70)
     }).catch((error)=>{
       console.log("hata")
       console.log(apiurl)
@@ -83,6 +90,7 @@ const fetchImagesFunc = async () => {
 
   //2
   const fetchCategoryFunc = async () => {
+    setProgressBuffer(85)
     const response = await axios(
       `${apiurl}/category/getAllCategory`
     )
@@ -99,12 +107,14 @@ const fetchImagesFunc = async () => {
       .then(() => {
         setFetchTableName(true);
         setProgress(75)
+        setProgressBuffer(85)
       });
     return;
   };
 
    //3
    const fetchTableNameFunc = async () => {
+    setProgressBuffer(90)
     const response = await axios.post(
       `${apiurl}/tables/getTable/${scanResult}`
     )
@@ -116,12 +126,14 @@ const fetchImagesFunc = async () => {
       .then(() => {
         setFetchOrder(true);
         setProgress(80)
+        setProgressBuffer(90)
       });
     return;
   };
 
 //4
   const fetchOrderFunc = async () => {
+    setProgressBuffer(95)
     const response = await axios(
       `${apiurl}/order/getAllOrders`
     )
@@ -132,6 +144,7 @@ const fetchImagesFunc = async () => {
       .then(() => {
         setFetchMenu(true);
         setProgress(90)
+        setProgressBuffer(95)
       });
     return;
   };
@@ -141,6 +154,7 @@ const fetchImagesFunc = async () => {
   // FINAL FUNC
   const fetchMenuFunc = () => {
     setProgress(100)
+    setProgressBuffer(100)
 /*
     const categoryList = [];
 
@@ -155,6 +169,7 @@ const fetchImagesFunc = async () => {
     setTimeout(() => {
       setLoading(false);
       setNavigatePage(true);
+
     }, 500);
   };
 
@@ -333,11 +348,29 @@ const fetchImagesFunc = async () => {
 
   const loadingPage = (
     <Box sx={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
-    <CircularProgress sx={{m:1,color:deepPurple[900]}}/>
-    
+     <Box sx={{ position: 'relative', display: 'inline-flex' }}>
+      <CircularProgress  />
+      <Box
+        sx={{
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0,
+          m:1,
+          position: 'absolute',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Typography variant="caption" component="div" sx={{fontWeight:900,fontSize:10,color:deepPurple[900]}} >
+          {`${Math.round(progress)}%`}
+        </Typography>
+      </Box>
+    </Box>
 
-    <LinearProgress sx={{m:1,maxWidth:"200px",width:"80vw",fill:deepPurple[900]}} variant="determinate" value={progress} />
-    <Box sx={{color:deepPurple[900],fontWeight:900,m:1}}>    BİRAZ VAKİT ALABİLİR, BU EKRANA GELDİYSENİZ VE ÇOK UZUN SÜRDÜYSE SAYFAYI YENİLEYEBİLİRSİNİZ
+    <LinearProgress sx={{color:deepPurple[500],fill:deepPurple[900],border:"3px solid",borderColor:deepPurple[500],borderRadius:"50px",p:1,pl:0,m:1,maxWidth:"200px",width:"80vw",fill:deepPurple[900]}} variant="buffer" value={progress} valueBuffer={progressBuffer} />
+    <Box sx={{color:deepPurple[900],fontWeight:900,m:1,textAlign:"center"}}>BİRAZ VAKİT ALABİLİR, BU EKRANA GELDİYSENİZ VE ÇOK UZUN SÜRDÜYSE SAYFAYI YENİLEYEBİLİRSİNİZ
  
           
           </Box>   
@@ -346,7 +379,7 @@ const fetchImagesFunc = async () => {
 
   return (
     <div >
-{netError ? <Box  sx={{ backgroundColor:deepPurple[100], color:"red"}}>
+{netError ? <Box  sx={{ backgroundColor:deepPurple[50], color:"red"}}>
         <Container
           sx={{
            
@@ -372,7 +405,7 @@ const fetchImagesFunc = async () => {
           BAĞLANTIYI DEĞİŞTİR
         </Button>
         </Container>
-      </Box> : <Box  sx={{ backgroundColor:deepPurple[100], color:"red"}}>
+      </Box> : <Box  sx={{ backgroundColor:deepPurple[50], color:"red"}}>
         <Container
           sx={{
            
