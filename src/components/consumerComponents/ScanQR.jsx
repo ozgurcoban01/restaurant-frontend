@@ -68,9 +68,9 @@ const ScanQR = () => {
   }
 
 //fetching images
-//1
+//2
 const fetchImagesFunc = async () => {
-  setProgressBuffer(10)
+  setProgressBuffer(55)
   const response = await axios(
     `${apiurl}/image/getAll`,options
   )
@@ -78,8 +78,8 @@ const fetchImagesFunc = async () => {
     .then((data) => dispatch(setImages(data)))
     .then(() => {
       setFetchTableName(true);
-      setProgress(70)
-      setProgressBuffer(70)
+      setProgress(60)
+      setProgressBuffer(65)
     }).catch((error)=>{
       console.log("hata")
       console.log(apiurl)
@@ -89,9 +89,9 @@ const fetchImagesFunc = async () => {
   return;
 };
 
-  //2
+  //1
   const fetchCategoryFunc = async () => {
-    setProgressBuffer(85)
+    setProgressBuffer(10)
     const response = await axios(
       `${apiurl}/category/getAllCategory`
     )
@@ -107,15 +107,15 @@ const fetchImagesFunc = async () => {
       })
       .then(() => {
         setFetchImages(true);
-        setProgress(75)
-        setProgressBuffer(85)
+        setProgress(50)
+        setProgressBuffer(55)
       });
     return;
   };
 
    //3
    const fetchTableNameFunc = async () => {
-    setProgressBuffer(90)
+    setProgressBuffer(65)
     const response = await axios.post(
       `${apiurl}/tables/getTable/${scanResult}`
     )
@@ -127,14 +127,14 @@ const fetchImagesFunc = async () => {
       .then(() => {
         setFetchOrder(true);
         setProgress(80)
-        setProgressBuffer(90)
+        setProgressBuffer(85)
       });
     return;
   };
 
 //4
   const fetchOrderFunc = async () => {
-    setProgressBuffer(95)
+    setProgressBuffer(85)
     const response = await axios(
       `${apiurl}/order/getAllOrders`
     )
