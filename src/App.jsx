@@ -246,7 +246,7 @@ const setColor=(e)=>{
 
   return (
     <>
-    <div style={{position:"absolute",backgroundColor:"black",color:"white",borderRadius:"10px",padding:"5px",margin:"10px",fontWeight:"bold",opacity:"0.5"}}>v0.5</div>
+    <div style={{position:"absolute",backgroundColor:"black",color:"white",borderRadius:"10px",padding:"5px",margin:"10px",fontWeight:"bold",opacity:"0.5"}}>v0.6</div>
         <ReactJoyride steps={steps} locale={{ back: 'Geri  ', close: 'Kapat', last: 'SON', next: 'İleri', open: 'Aç', skip: 'Atla' }} continuous={true}/>
       <ThemeProvider theme={selectedTheme}> 
       <CssBaseline/>
