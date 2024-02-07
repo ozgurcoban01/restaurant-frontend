@@ -61,16 +61,42 @@ const ScanQR = () => {
     onDownloadProgress:function(progressEvent){
 
       if(true){
-        setProgress(progressEvent.progress*70)
+        setProgress(progressEvent.progress*70+55)
       }
 
     }
   }
 
+    //1
+    const fetchCategoryFunc = async () => {
+      setProgressBuffer(10)
+      console.log("1")
+      const response = await axios(
+        `${apiurl}/category/getAllCategory`
+      )
+        .then((res) => res.data)
+        .then((data)=>{
+          const tempCategories=[]
+          if(data.length>0){
+            data.forEach(element => {
+              tempCategories.push(element.name)
+            });
+          }
+          dispatch(setCategories(tempCategories))
+        })
+        .then(() => {
+          setFetchImages(true);
+          setProgress(50)
+          setProgressBuffer(55)
+        });
+      return;
+    };
+
 //fetching images
 //2
 const fetchImagesFunc = async () => {
   setProgressBuffer(55)
+  console.log("2")
   const response = await axios(
     `${apiurl}/image/getAll`,options
   )
@@ -89,33 +115,12 @@ const fetchImagesFunc = async () => {
   return;
 };
 
-  //1
-  const fetchCategoryFunc = async () => {
-    setProgressBuffer(10)
-    const response = await axios(
-      `${apiurl}/category/getAllCategory`
-    )
-      .then((res) => res.data)
-      .then((data)=>{
-        const tempCategories=[]
-        if(data.length>0){
-          data.forEach(element => {
-            tempCategories.push(element.name)
-          });
-        }
-        dispatch(setCategories(tempCategories))
-      })
-      .then(() => {
-        setFetchImages(true);
-        setProgress(50)
-        setProgressBuffer(55)
-      });
-    return;
-  };
+
 
    //3
    const fetchTableNameFunc = async () => {
     setProgressBuffer(65)
+    console.log("3")
     const response = await axios.post(
       `${apiurl}/tables/getTable/${scanResult}`
     )
@@ -135,6 +140,7 @@ const fetchImagesFunc = async () => {
 //4
   const fetchOrderFunc = async () => {
     setProgressBuffer(85)
+    console.log("4")
     const response = await axios(
       `${apiurl}/order/getAllOrders`
     )
