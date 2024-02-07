@@ -12,6 +12,7 @@ import { consumerTheme } from "./consumerTheme.js";
 ReactDOM.createRoot(document.getElementById("root")).render(
 
    <Provider store={store}>
+    
     <BrowserRouter>
       <App />
     </BrowserRouter>
