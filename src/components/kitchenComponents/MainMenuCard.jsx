@@ -65,6 +65,7 @@ const MainMenuCard = ({menu,title,price,category,image_id,menu_id}) => {
   return (
     <Card sx={{maxWidth:"200px",width:"100%",m:1,minHeight:"300px",borderRadius:5,backgroundColor:"primary.light",mb:3}}>
         <CardMedia
+          component="img"
           sx={{ height: 140 }}
           image={`data:image/png;base64,${imgSrc}`}
           title="green iguana"

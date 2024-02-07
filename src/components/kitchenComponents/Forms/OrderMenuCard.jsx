@@ -189,6 +189,7 @@ const OrderMenuCard = ({ order }) => {
                 }}
               >
                 <CardMedia
+                  component="img"
                   sx={{ height: 70 }}
                   image={`data:image/png;base64,${imgSrc}`}
                   title="green iguana"
