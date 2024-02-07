@@ -60,13 +60,14 @@ const ScanQR = () => {
   const options={
     onDownloadProgress:function(progressEvent){
 
-      if(progressEvent!=NaN){
+      if(true){
         setProgress(progressEvent.progress*70)
       }
 
     }
   }
 
+//fetching images
 //1
 const fetchImagesFunc = async () => {
   setProgressBuffer(10)
@@ -76,7 +77,7 @@ const fetchImagesFunc = async () => {
     .then((res) => res.data)
     .then((data) => dispatch(setImages(data)))
     .then(() => {
-      setFetchCategory(true);
+      setFetchTableName(true);
       setProgress(70)
       setProgressBuffer(70)
     }).catch((error)=>{
@@ -105,7 +106,7 @@ const fetchImagesFunc = async () => {
         dispatch(setCategories(tempCategories))
       })
       .then(() => {
-        setFetchTableName(true);
+        setFetchImages(true);
         setProgress(75)
         setProgressBuffer(85)
       });
@@ -222,7 +223,7 @@ const fetchImagesFunc = async () => {
       console.log(result)
       setScanResult(result);
       setLoading(true);
-      setFetchImages(true);
+      setFetchCategory(true);
       scanner.clear();
     };
 
@@ -278,9 +279,9 @@ const fetchImagesFunc = async () => {
   let scanResultDiv;
 
   const skipToEnterName = () => {
-    setScanResult("65140cfdb55ef7f67a7f7fff");
+    setScanResult("65c3a9fe1a8d41e4f752a2b7");
     setLoading(true);
-    setFetchImages(true);
+    setFetchCategory(true);
   };
 
   const changeApiUrl = () => {
@@ -291,10 +292,10 @@ const fetchImagesFunc = async () => {
   };
 
   const skipToAdmin = () => {
-    setScanResult("65140cfdb55ef7f67a7f7fff");
+    setScanResult("65c3a9fe1a8d41e4f752a2b7");
     setIsAdmin(true)
     setLoading(true);
-    setFetchImages(true);
+    setFetchCategory(true);
   };
 
   if (navigatePage) {
@@ -369,7 +370,7 @@ const fetchImagesFunc = async () => {
       </Box>
     </Box>
 
-    <LinearProgress sx={{color:deepPurple[500],fill:deepPurple[900],border:"3px solid",borderColor:deepPurple[500],borderRadius:"50px",p:1,pl:0,m:1,maxWidth:"200px",width:"80vw",fill:deepPurple[900]}} variant="buffer" value={progress} valueBuffer={progressBuffer} />
+    <LinearProgress sx={{color:deepPurple[500],fill:deepPurple[900],border:"3px solid",borderColor:deepPurple[500],borderRadius:"50px",p:1,pl:0,m:1,maxWidth:"200px",width:"80vw"}} variant="buffer" value={progress} valueBuffer={progressBuffer} />
     <Box sx={{color:deepPurple[900],fontWeight:900,m:1,textAlign:"center"}}>BİRAZ VAKİT ALABİLİR, BU EKRANA GELDİYSENİZ VE ÇOK UZUN SÜRDÜYSE SAYFAYI YENİLEYEBİLİRSİNİZ
  
           

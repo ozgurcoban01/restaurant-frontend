@@ -1,3 +1,5 @@
+/*
+
 import React, { useEffect, useState } from "react";
 import { Html5QrcodeScanner } from "html5-qrcode";
 import { Box, Button, Container } from "@mui/material";
@@ -83,7 +85,7 @@ const ScanQR = () => {
 //1
   const fetchImagesFunc = async () => {
     const response = await axios(
-      `${import.meta.env.VITE_API_URL}/image/getAll`
+      `https://backedn-test.onrender.com/image/getAll`
     )
       .then((res) => res.data)
       .then((data) => dispatch(setImages(data)))
@@ -274,3 +276,5 @@ const ScanQR = () => {
 };
 2;
 export default ScanQR;
+
+*/
